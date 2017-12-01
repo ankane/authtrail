@@ -1,4 +1,4 @@
-class <%= migration_class_name %> < ActiveRecord::Migration<%= migration_version %>
+class <%= migration_class_name %> < ActiveRecord::Migration
   def change
     create_table :login_activities do |t|
       t.text :scope
