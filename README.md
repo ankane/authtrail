@@ -109,6 +109,12 @@ class LoginActivity < ApplicationRecord
 end
 ```
 
+## Custom user identify lookup
+
+```
+AuthTrain.identity = ->(request, opts, user) { user.try(:email) || request.params.dig(opts[:scope], :email) }
+```
+
 ## Other Notes
 
 We recommend using this in addition to Devise’s `Lockable` module and [Rack::Attack](https://github.com/kickstarter/rack-attack).

@@ -1,3 +1,7 @@
+## 0.1.2 (unreleased)
+
+- Custom user identify lookup
+
 ## 0.1.1
 
 - Improved strategy detection for failures
