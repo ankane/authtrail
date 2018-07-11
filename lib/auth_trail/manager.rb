@@ -26,11 +26,13 @@ module AuthTrail
         AuthTrail.safely do
           if opts[:message]
             request = ActionDispatch::Request.new(env)
-            identity = request.params[opts[:scope]] && request.params[opts[:scope]][:email] rescue nil
+            scope = opts[:scope]
+            identity = request.params[scope] && request.params[scope][:email] rescue nil
 
             warden_config = env['warden'].config
-            default_scope = warden_config[:default_scope]
-            default_strategy = warden_config[:default_strategies][default_scope][0]
+            default_strategies = warden_config[:default_strategies][scope]
+            default_strategies.delete(:rememberable)
+            default_strategy = default_strategies.first.to_s
 
             AuthTrail.track(
               strategy: default_strategy,
