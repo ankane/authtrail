@@ -28,8 +28,12 @@ module AuthTrail
             request = ActionDispatch::Request.new(env)
             identity = request.params[opts[:scope]] && request.params[opts[:scope]][:email] rescue nil
 
+            warden_config = env['warden'].config
+            default_scope = warden_config[:default_scope]
+            default_strategy = warden_config[:default_strategies][default_scope][0]
+
             AuthTrail.track(
-              strategy: "database_authenticatable",
+              strategy: default_strategy,
               scope: opts[:scope].to_s,
               identity: identity,
               success: false,
