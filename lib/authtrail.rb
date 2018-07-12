@@ -1,6 +1,8 @@
+# dependencies
 require "geocoder"
-require "rails"
 require "warden"
+
+# modules
 require "auth_trail/engine"
 require "auth_trail/manager"
 require "auth_trail/version"
