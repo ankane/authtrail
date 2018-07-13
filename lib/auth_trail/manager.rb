@@ -25,7 +25,7 @@ module AuthTrail
             AuthTrail.track(
               strategy: detect_strategy(env["warden"]),
               scope: opts[:scope].to_s,
-              identity: detect_identity(request, opts),
+              identity: detect_identity(request, opts, nil),
               success: false,
               request: request,
               failure_reason: opts[:message].to_s
@@ -36,7 +36,8 @@ module AuthTrail
 
       private
 
-      def detect_identity(request, opts, user = nil)
+      # TODO add ability to customize
+      def detect_identity(request, opts, user)
         if user
           user.try(:email)
         else
