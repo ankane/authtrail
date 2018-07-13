@@ -24,7 +24,7 @@ rake db:migrate
 A `LoginActivity` record is created every time a user tries to login. You can then use this information to detect suspicious behavior. Data includes:
 
 - `scope` - Devise scope
-- `strategy` - Winning Devise strategy used for authentication
+- `strategy` - Devise strategy
 - `identity` - email address
 - `success` - whether the login succeeded
 - `failure_reason` - if the login failed
