@@ -7,6 +7,7 @@ module AuthTrail
           request = ActionDispatch::Request.new(auth.env)
 
           identity = user.try(:email)
+
           AuthTrail.track(
             strategy: detect_strategy(auth),
             scope: opts[:scope].to_s,
@@ -22,6 +23,7 @@ module AuthTrail
         AuthTrail.safely do
           if opts[:message]
             request = ActionDispatch::Request.new(env)
+
             scope = opts[:scope]
             identity = request.params[scope] && request.params[scope][:email] rescue nil
 
