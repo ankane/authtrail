@@ -26,10 +26,15 @@ module AuthTrail
         AuthTrail.safely do
           if opts[:message]
             request = ActionDispatch::Request.new(env)
-            identity = request.params[opts[:scope]] && request.params[opts[:scope]][:email] rescue nil
+            scope = opts[:scope]
+            identity = request.params[scope] && request.params[scope][:email] rescue nil
+
+            winning_strategy = env["warden"].winning_strategy
+            winning_strategy_class_name = winning_strategy.class.name.split("::").last
+            strategy = ActiveSupport::Inflector.underscore(winning_strategy_class_name)
 
             AuthTrail.track(
-              strategy: "database_authenticatable",
+              strategy: strategy,
               scope: opts[:scope].to_s,
               identity: identity,
               success: false,
