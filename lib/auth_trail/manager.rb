@@ -29,13 +29,12 @@ module AuthTrail
             scope = opts[:scope]
             identity = request.params[scope] && request.params[scope][:email] rescue nil
 
-            warden_config = env['warden'].config
-            default_strategies = warden_config[:default_strategies][scope]
-            default_strategies.delete(:rememberable)
-            default_strategy = default_strategies.first.to_s
+            winning_strategy = env["warden"].winning_strategy
+            winning_strategy_class_name = winning_strategy.class.name.split("::").last
+            strategy = ActiveSupport::Inflector.underscore(winning_strategy_class_name)
 
             AuthTrail.track(
-              strategy: default_strategy,
+              strategy: strategy,
               scope: opts[:scope].to_s,
               identity: identity,
               success: false,
