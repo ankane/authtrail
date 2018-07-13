@@ -6,12 +6,10 @@ module AuthTrail
         AuthTrail.safely do
           request = ActionDispatch::Request.new(auth.env)
 
-          identity = user.try(:email)
-
           AuthTrail.track(
             strategy: detect_strategy(auth),
             scope: opts[:scope].to_s,
-            identity: identity,
+            identity: detect_identity(request, opts, user),
             success: true,
             request: request,
             user: user
@@ -24,13 +22,10 @@ module AuthTrail
           if opts[:message]
             request = ActionDispatch::Request.new(env)
 
-            scope = opts[:scope]
-            identity = request.params[scope] && request.params[scope][:email] rescue nil
-
             AuthTrail.track(
               strategy: detect_strategy(env["warden"]),
-              scope: scope.to_s,
-              identity: identity,
+              scope: opts[:scope].to_s,
+              identity: detect_identity(request, opts),
               success: false,
               request: request,
               failure_reason: opts[:message].to_s
@@ -40,6 +35,15 @@ module AuthTrail
       end
 
       private
+
+      def detect_identity(request, opts, user = nil)
+        if user
+          user.try(:email)
+        else
+          scope = opts[:scope]
+          request.params[scope] && request.params[scope][:email] rescue nil
+        end
+      end
 
       def detect_strategy(auth)
         strategy = auth.env["omniauth.auth"]["provider"] if auth.env["omniauth.auth"]
