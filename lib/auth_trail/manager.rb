@@ -21,13 +21,18 @@ module AuthTrail
         AuthTrail.safely do
           if opts[:message]
             request = ActionDispatch::Request.new(env)
+            identity = detect_identity(request, opts, nil)
+            scope = opts[:scope].to_s
+            scope_class = scope.capitalize.constantize
+            user = identity ? scope_class.find_by_email(identity) : nil
 
             AuthTrail.track(
               strategy: detect_strategy(env["warden"]),
-              scope: opts[:scope].to_s,
-              identity: detect_identity(request, opts, nil),
+              scope: scope,
+              identity: identity,
               success: false,
               request: request,
+              user: user,
               failure_reason: opts[:message].to_s
             )
           end
