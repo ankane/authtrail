@@ -35,6 +35,16 @@ A `LoginActivity` record is created every time a user tries to login. You can th
 - `city`, `region`, and `country` - from IP
 - `created_at` - time of event
 
+Associate `LoginActivity` with your user model:
+
+```
+class Manager < ApplicationRecord
+  has_many :login_activities, as: :user
+end
+```
+
+The `LoginActivity` model uses a [polymorphic](http://guides.rubyonrails.org/association_basics.html#polymorphic-associations) association out of the box, so login activities can belong to different models (User, Admin, Manager, etc).
+
 ## Features
 
 Exclude certain attempts from tracking - useful if you run acceptance tests
