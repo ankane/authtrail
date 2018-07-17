@@ -3,7 +3,7 @@ module AuthTrail
     def perform(login_activity)
       result =
         begin
-          Geocoder.search(login_activity.ip).first.try(:data)
+          Geocoder.search(login_activity.ip).first
         rescue => e
           Rails.logger.info "Geocode failed: #{e.message}"
           nil
@@ -11,9 +11,9 @@ module AuthTrail
 
       if result
         login_activity.update!(
-          city: result["city"].presence,
-          region: result["region_name"].presence,
-          country: result["country_name"].presence
+          city: result.try(:city).presence,
+          region: result.try(:state).presence,
+          country: result.try(:country).presence
         )
       end
     end
