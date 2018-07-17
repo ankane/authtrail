@@ -88,6 +88,17 @@ Geocoder.configure(
 )
 ```
 
+## Privacy
+
+Protect the privacy of your users by encrypting fields that contain personal information, such as `identity` and `ip`. [attr_encrypted](https://github.com/attr-encrypted/attr_encrypted) is a great library for this.
+
+```ruby
+class LoginActivity < ApplicationRecord
+  attr_encrypted :identity, ...
+  attr_encrypted :ip, ...
+end
+```
+
 ## Other Notes
 
 We recommend using this in addition to Devise’s `Lockable` module and [Rack::Attack](https://github.com/kickstarter/rack-attack).
