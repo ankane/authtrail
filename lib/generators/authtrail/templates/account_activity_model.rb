@@ -1,3 +1,3 @@
-class LoginActivity < ApplicationRecord
+class AccountActivity < ApplicationRecord
   belongs_to :user, polymorphic: true, optional: true
 end

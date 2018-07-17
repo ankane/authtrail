@@ -13,8 +13,9 @@ module AuthTrail
   end
   self.geocode = true
 
-  def self.track(strategy:, scope:, identity:, success:, request:, user: nil, failure_reason: nil)
+  def self.track(activity_type:, strategy:, scope:, identity:, success:, request:, user: nil, failure_reason: nil)
     info = {
+      activity_type: activity_type,
       strategy: strategy,
       scope: scope,
       identity: identity,
@@ -34,7 +35,7 @@ module AuthTrail
       if AuthTrail.track_method
         AuthTrail.track_method.call(info)
       else
-        login_activity = LoginActivity.create!(info)
+        login_activity = AccountActivity.create!(info)
         AuthTrail::GeocodeJob.perform_later(login_activity) if AuthTrail.geocode
       end
     end
@@ -56,4 +57,8 @@ end
 
 Warden::Manager.before_failure do |env, opts|
   AuthTrail::Manager.before_failure(env, opts)
+end
+
+Warden::Manager.before_logout do |user, auth, opts|
+  AuthTrail::Manager.before_logout(user, auth, opts)
 end

@@ -7,6 +7,7 @@ module AuthTrail
           request = ActionDispatch::Request.new(auth.env)
 
           AuthTrail.track(
+            activity_type: "sign_in",
             strategy: detect_strategy(auth),
             scope: opts[:scope].to_s,
             identity: detect_identity(request, opts, user),
@@ -23,6 +24,7 @@ module AuthTrail
             request = ActionDispatch::Request.new(env)
 
             AuthTrail.track(
+              activity_type: "sign_in_failed",
               strategy: detect_strategy(env["warden"]),
               scope: opts[:scope].to_s,
               identity: detect_identity(request, opts, nil),
@@ -31,6 +33,22 @@ module AuthTrail
               failure_reason: opts[:message].to_s
             )
           end
+        end
+      end
+
+      def before_logout(user, auth, opts)
+        AuthTrail.safely do
+          request = ActionDispatch::Request.new(auth.env)
+
+          AuthTrail.track(
+            activity_type: "sign_out",
+            strategy: detect_strategy(auth),
+            scope: opts[:scope].to_s,
+            identity: detect_identity(request, opts, user),
+            success: true,
+            request: request,
+            user: user
+          )
         end
       end
 
