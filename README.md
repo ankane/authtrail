@@ -35,12 +35,6 @@ A `LoginActivity` record is created every time a user tries to login. You can th
 - `city`, `region`, and `country` - from IP
 - `created_at` - time of event
 
-IP geocoding is performed in a background job so it doesn’t slow down web requests. You can disable it entirely with:
-
-```ruby
-AuthTrail.geocode = false
-```
-
 ## Features
 
 Exclude certain attempts from tracking - useful if you run acceptance tests
@@ -59,10 +53,39 @@ AuthTrail.track_method = proc do |info|
 end
 ```
 
+## Geocoding
+
+IP geocoding is performed in a background job so it doesn’t slow down web requests. You can disable it entirely with:
+
+```ruby
+AuthTrail.geocode = false
+```
+
 Set job queue for geocoding
 
 ```ruby
 AuthTrail::GeocodeJob.queue_as :low
+```
+
+### Geocoding Performance
+
+To avoid calls to a remote API, download the [GeoLite2 City database](https://dev.maxmind.com/geoip/geoip2/geolite2/) and configure Geocoder to use it.
+
+Add this line to your application’s Gemfile:
+
+```ruby
+gem 'maxminddb'
+```
+
+And create an initializer at `config/initializers/geocoder.rb` with:
+
+```ruby
+Geocoder.configure(
+  ip_lookup: :geoip2,
+  geoip2: {
+    file: Rails.root.join("lib", "GeoLite2-City.mmdb")
+  }
+)
 ```
 
 ## Other Notes
