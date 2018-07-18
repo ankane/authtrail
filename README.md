@@ -16,10 +16,10 @@ And run:
 
 ```sh
 rails generate authtrail:install
-rake db:migrate
+rails db:migrate
 ```
 
-If you use Devise, add `:trailable` to your Devise models:
+Then, add `:trailable` to your Devise models:
 
 ```ruby
 class User < ApplicationRecord
