@@ -1,4 +1,5 @@
 # dependencies
+require "active_support"
 require "geocoder"
 require "warden"
 
@@ -33,12 +34,15 @@ module AuthTrail
       identity: identity,
       success: success,
       failure_reason: failure_reason,
-      user: user,
-      context: "#{request.params[:controller]}##{request.params[:action]}",
-      ip: request.remote_ip,
-      user_agent: request.user_agent,
-      referrer: request.referrer
+      user: user
     }
+
+    if request
+      info[:context] = "#{request.params[:controller]}##{request.params[:action]}"
+      info[:ip] = request.remote_ip
+      info[:user_agent] = request.user_agent
+      info[:referrer] = request.referrer
+    end
 
     # if exclude_method throws an exception, default to not excluding
     exclude = AuthTrail.exclude_method && AuthTrail.safely(default: false) { AuthTrail.exclude_method.call(info) }
@@ -48,7 +52,7 @@ module AuthTrail
         AuthTrail.track_method.call(info)
       else
         login_activity = AccountActivity.create!(info)
-        AuthTrail::GeocodeJob.perform_later(login_activity) if AuthTrail.geocode
+        AuthTrail::GeocodeJob.perform_later(login_activity) if request && AuthTrail.geocode
       end
     end
   end
