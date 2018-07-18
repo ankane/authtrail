@@ -24,9 +24,6 @@ module AuthTrail
   def self.track(activity_type:, success: true, strategy: nil, scope: nil, identity: nil, request: nil, user: nil, failure_reason: nil)
     request ||= RequestStore.store[:authtrail_request]
 
-    # TODO use identity method
-    identity = user.try(:email)
-
     info = {
       activity_type: activity_type,
       strategy: strategy,

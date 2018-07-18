@@ -44,7 +44,6 @@ module AuthTrail
             activity_type: "sign_out",
             strategy: detect_strategy(auth),
             scope: opts[:scope].to_s,
-            identity: detect_identity(request, opts, user),
             success: true,
             request: request,
             user: user

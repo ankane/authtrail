@@ -29,7 +29,7 @@ end
 
 ## How It Works
 
-A `AccountActivity` record is created every time a user tries to login. You can then use this information to detect suspicious behavior. Data includes:
+A `AccountActivity` record is created when certain activities occur. You can then use this information to detect suspicious behavior. Data includes:
 
 - `activity_type` - can be `sign_in`, `sign_out`, `password_reset_request`, `email_change`, `password_change`
 - `user` - the user
