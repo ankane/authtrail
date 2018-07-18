@@ -103,6 +103,8 @@ end
 
 We recommend using this in addition to Devise’s `Lockable` module and [Rack::Attack](https://github.com/kickstarter/rack-attack).
 
+Check out [Hardening Devise](https://github.com/ankane/shorts/blob/master/Hardening-Devise.md) and [Secure Rails](https://github.com/ankane/secure_rails) for more best practices.
+
 Works with Rails 5+
 
 ## History
