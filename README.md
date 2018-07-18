@@ -55,7 +55,7 @@ end
 
 Associate `LoginActivity` with your user model:
 
-```
+```ruby
 class Manager < ApplicationRecord
   has_many :login_activities, as: :user
 end
