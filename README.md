@@ -33,16 +33,19 @@ A `AccountActivity` record is created every time a user tries to login. You can 
 
 - `activity_type` - can be `sign_in`, `sign_out`, `password_reset_request`, `email_change`, `password_change`
 - `user` - the user
-- `identity` - when an action does not affect an existing user
-- `scope` - Devise scope
-- `strategy` - Devise strategy
-- `success` - whether the activity succeeded
-- `failure_reason` - for failures
 - `ip` - IP address
 - `user_agent` and `referrer` - from browser
 - `context` - controller and action
 - `city`, `region`, and `country` - from IP
 - `created_at` - time of event
+
+There a number of attributes specific to sign in activity.
+
+- `scope` - Devise scope
+- `strategy` - Devise strategy
+- `identity` - identity that was used - typically email address or username
+- `success` - whether the sign in succeeded
+- `failure_reason` - for failures
 
 ## Features
 
