@@ -21,17 +21,18 @@ rake db:migrate
 
 ## How It Works
 
-A `LoginActivity` record is created every time a user tries to login. You can then use this information to detect suspicious behavior. Data includes:
+A `AccountActivity` record is created every time a user tries to login. You can then use this information to detect suspicious behavior. Data includes:
 
+- `activity_type` - can be `sign_in`, `sign_out`, `password_reset_request`, `email_change`, `password_change`
+- `user` - the user
+- `identity` - when an action does not affect an existing user
 - `scope` - Devise scope
 - `strategy` - Devise strategy
-- `identity` - email address
-- `success` - whether the login succeeded
-- `failure_reason` - if the login failed
-- `user` - the user if the login succeeded
-- `context` - controller and action
+- `success` - whether the activity succeeded
+- `failure_reason` - for failures
 - `ip` - IP address
 - `user_agent` and `referrer` - from browser
+- `context` - controller and action
 - `city`, `region`, and `country` - from IP
 - `created_at` - time of event
 
@@ -40,15 +41,15 @@ A `LoginActivity` record is created every time a user tries to login. You can th
 Exclude certain attempts from tracking - useful if you run acceptance tests
 
 ```ruby
-AuthTrail.exclude_method = proc do |info|
+AuthTrail.exclude_method = lambda do |info|
   info[:identity] == "capybara@example.org"
 end
 ```
 
-Write data somewhere other than the `login_activities` table.
+Write data somewhere other than the `account_activities` table.
 
 ```ruby
-AuthTrail.track_method = proc do |info|
+AuthTrail.track_method = lambda do |info|
   # code
 end
 ```
