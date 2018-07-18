@@ -37,7 +37,7 @@ A `LoginActivity` record is created every time a user tries to login. You can th
 
 ## Features
 
-Exclude certain attempts from tracking - useful if you run acceptance tests
+Exclude certain attempts from tracking - useful if you run acceptance tests:
 
 ```ruby
 AuthTrail.exclude_method = proc do |info|
@@ -45,13 +45,23 @@ AuthTrail.exclude_method = proc do |info|
 end
 ```
 
-Write data somewhere other than the `login_activities` table.
+Write data somewhere other than the `login_activities` table:
 
 ```ruby
 AuthTrail.track_method = proc do |info|
   # code
 end
 ```
+
+Associate `LoginActivity` with your user model:
+
+```
+class Manager < ApplicationRecord
+  has_many :login_activities, as: :user
+end
+```
+
+The `LoginActivity` model uses a [polymorphic](http://guides.rubyonrails.org/association_basics.html#polymorphic-associations) association out of the box, so login activities can belong to different models (User, Admin, Manager, etc).
 
 ## Geocoding
 
