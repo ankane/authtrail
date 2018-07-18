@@ -43,7 +43,7 @@ There a number of attributes specific to sign in activity.
 
 - `scope` - Devise scope
 - `strategy` - Devise strategy
-- `identity` - identity that was used - typically email address or username
+- `identity` - identity that was used - typically email or username
 - `success` - whether the sign in succeeded
 - `failure_reason` - for failures
 
@@ -63,6 +63,12 @@ Write data somewhere other than the `account_activities` table.
 AuthTrail.track_method = lambda do |info|
   # code
 end
+```
+
+Track your own custom activities with:
+
+```ruby
+AuthTrail.track(activity_type: "phone_change", user: user)
 ```
 
 ## Geocoding
@@ -105,6 +111,27 @@ Geocoder.configure(
 We recommend using this in addition to Devise’s `Lockable` module and [Rack::Attack](https://github.com/kickstarter/rack-attack).
 
 Works with Rails 5+
+
+## Upgrading
+
+### 0.2.0
+
+Create a migration with:
+
+```ruby
+add_column :login_activities, :activity_type, :string
+```
+
+Change the `LoginActivity` model to:
+
+```ruby
+class AccountActivity < ApplicationRecord
+  self.table_name = "login_activities"
+  belongs_to :user, polymorphic: true, optional: true
+end
+```
+
+Be sure to rename the file to `account_activity.rb` as well.
 
 ## History
 
