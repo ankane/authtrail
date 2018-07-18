@@ -7,6 +7,11 @@ require "auth_trail/engine"
 require "auth_trail/manager"
 require "auth_trail/version"
 
+# devise
+if defined?(Devise)
+  require "devise/models/trailable"
+end
+
 module AuthTrail
   class << self
     attr_accessor :exclude_method, :geocode, :track_method
