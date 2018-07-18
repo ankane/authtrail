@@ -1,6 +1,6 @@
 # AuthTrail
 
-Track Devise login activity
+Track Devise account activity
 
 :tangerine: Battle-tested at [Instacart](https://www.instacart.com/opensource)
 
@@ -17,6 +17,14 @@ And run:
 ```sh
 rails generate authtrail:install
 rake db:migrate
+```
+
+If you use Devise, add `:trailable` to your Devise models:
+
+```ruby
+class User < ApplicationRecord
+  devise :trailable, ...
+end
 ```
 
 ## How It Works
