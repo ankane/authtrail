@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "activerecord", ">= 5"
   spec.add_dependency "warden"
   spec.add_dependency "geocoder"
+  spec.add_dependency "request_store"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"

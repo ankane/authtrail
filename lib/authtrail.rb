@@ -3,8 +3,10 @@ require "geocoder"
 require "warden"
 
 # modules
+require "auth_trail/controller"
 require "auth_trail/engine"
 require "auth_trail/manager"
+require "auth_trail/model"
 require "auth_trail/version"
 
 # devise
@@ -18,7 +20,12 @@ module AuthTrail
   end
   self.geocode = true
 
-  def self.track(activity_type:, strategy:, scope:, identity:, success:, request:, user: nil, failure_reason: nil)
+  def self.track(activity_type:, success: true, strategy: nil, scope: nil, identity: nil, request: nil, user: nil, failure_reason: nil)
+    request ||= RequestStore.store[:authtrail_request]
+
+    # TODO use identity method
+    identity = user.try(:email)
+
     info = {
       activity_type: activity_type,
       strategy: strategy,
@@ -66,4 +73,8 @@ end
 
 Warden::Manager.before_logout do |user, auth, opts|
   AuthTrail::Manager.before_logout(user, auth, opts)
+end
+
+ActiveSupport.on_load(:action_controller) do
+  include AuthTrail::Controller
 end
