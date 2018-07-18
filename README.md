@@ -16,7 +16,7 @@ And run:
 
 ```sh
 rails generate authtrail:install
-rake db:migrate
+rails db:migrate
 ```
 
 ## How It Works
