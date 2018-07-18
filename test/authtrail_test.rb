@@ -29,12 +29,19 @@ class AuthTrailTest < Minitest::Test
     assert_equal ["password_reset_request"], AccountActivity.all.map(&:activity_type)
   end
 
+  def test_password_reset_request_empty
+    user = create_user(reset_password_sent_at: Time.now)
+    user.reset_password_sent_at = nil
+    user.save!
+    assert_equal [], AccountActivity.all.map(&:activity_type)
+  end
+
   private
 
-  def create_user
-    User.create!(
+  def create_user(attributes = {})
+    User.create!({
       email: "test@example.org",
       encrypted_password: "secret"
-    )
+    }.merge(attributes))
   end
 end
