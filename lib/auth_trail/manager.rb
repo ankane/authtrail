@@ -24,7 +24,7 @@ module AuthTrail
             request = ActionDispatch::Request.new(env)
 
             AuthTrail.track(
-              activity_type: "sign_in_failed",
+              activity_type: "sign_in",
               strategy: detect_strategy(env["warden"]),
               scope: opts[:scope].to_s,
               identity: detect_identity(request, opts, nil),
