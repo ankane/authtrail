@@ -17,9 +17,17 @@ end
 
 module AuthTrail
   class << self
-    attr_accessor :exclude_method, :geocode, :track_method
+    attr_accessor :exclude_method, :geocode, :track_method, :identity_method
   end
   self.geocode = true
+  self.identity_method = lambda do |request, opts, user|
+    if user
+      user.try(:email)
+    else
+      scope = opts[:scope]
+      request.params[scope] && request.params[scope][:email] rescue nil
+    end
+  end
 
   def self.track(activity_type:, success: true, strategy: nil, scope: nil, identity: nil, request: nil, user: nil, failure_reason: nil)
     request ||= RequestStore.store[:authtrail_request]
