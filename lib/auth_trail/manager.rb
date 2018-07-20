@@ -9,7 +9,7 @@ module AuthTrail
           AuthTrail.track(
             strategy: detect_strategy(auth),
             scope: opts[:scope].to_s,
-            identity: detect_identity(request, opts, user),
+            identity: AuthTrail.identity_method.call(request, opts, user),
             success: true,
             request: request,
             user: user
@@ -25,7 +25,7 @@ module AuthTrail
             AuthTrail.track(
               strategy: detect_strategy(env["warden"]),
               scope: opts[:scope].to_s,
-              identity: detect_identity(request, opts, nil),
+              identity: AuthTrail.identity_method.call(request, opts, nil),
               success: false,
               request: request,
               failure_reason: opts[:message].to_s
@@ -35,16 +35,6 @@ module AuthTrail
       end
 
       private
-
-      # TODO add ability to customize
-      def detect_identity(request, opts, user)
-        if user
-          user.try(:email)
-        else
-          scope = opts[:scope]
-          request.params[scope] && request.params[scope][:email] rescue nil
-        end
-      end
 
       def detect_strategy(auth)
         strategy = auth.env["omniauth.auth"]["provider"] if auth.env["omniauth.auth"]
