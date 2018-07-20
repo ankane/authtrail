@@ -17,7 +17,7 @@ module AuthTrail
       user.try(:email)
     else
       scope = opts[:scope]
-      request.params[scope] && request.params[scope][:email]
+      request.params[scope] && request.params[scope][:email] rescue nil
     end
   end
 
