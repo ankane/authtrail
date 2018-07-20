@@ -68,8 +68,8 @@ end
 Associate login activity with your user model
 
 ```ruby
-class Admin < ApplicationRecord
-  has_many :login_activities, as: :user
+class User < ApplicationRecord
+  has_many :login_activities, as: :user # use :user no matter what your model name
 end
 ```
 
