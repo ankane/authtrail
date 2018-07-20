@@ -16,7 +16,8 @@ module AuthTrail
     if user
       user.try(:email)
     else
-      request.params.dig(opts[:scope], :email)
+      scope = opts[:scope]
+      request.params[scope] && request.params[scope][:email]
     end
   end
 

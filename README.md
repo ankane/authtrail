@@ -37,23 +37,35 @@ A `LoginActivity` record is created every time a user tries to login. You can th
 
 ## Features
 
-Exclude certain attempts from tracking - useful if you run acceptance tests:
+Exclude certain attempts from tracking - useful if you run acceptance tests
 
 ```ruby
-AuthTrail.exclude_method = proc do |info|
+AuthTrail.exclude_method = lambda do |info|
   info[:identity] == "capybara@example.org"
 end
 ```
 
-Write data somewhere other than the `login_activities` table:
+Write data somewhere other than the `login_activities` table
 
 ```ruby
-AuthTrail.track_method = proc do |info|
+AuthTrail.track_method = lambda do |info|
   # code
 end
 ```
 
-Associate `LoginActivity` with your user model:
+Use a custom identity method [master]
+
+```ruby
+AuthTrain.identity_method = lambda do |request, opts, user|
+  if user
+    user.email
+  else
+    request.params.dig(opts[:scope], :email)
+  end
+end
+```
+
+Associate `LoginActivity` with your user model
 
 ```ruby
 class Manager < ApplicationRecord
@@ -107,12 +119,6 @@ class LoginActivity < ApplicationRecord
   attr_encrypted :identity, ...
   attr_encrypted :ip, ...
 end
-```
-
-## Custom user identify lookup
-
-```
-AuthTrain.identity = ->(request, opts, user) { user.try(:email) || request.params.dig(opts[:scope], :email) }
 ```
 
 ## Other Notes

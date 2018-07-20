@@ -1,6 +1,7 @@
-## 0.1.2 (unreleased)
+## 0.1.2 [unreleased]
 
-- Custom user identify lookup
+- Added `identity_method` option
+- Fixed geocoding
 
 ## 0.1.1
 
