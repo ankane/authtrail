@@ -112,7 +112,7 @@ Geocoder.configure(
 
 ## Privacy
 
-Protect the privacy of your users by encrypting fields that contain personal information, such as `identity` and `ip`. [attr_encrypted](https://github.com/attr-encrypted/attr_encrypted) is a great library for this.
+Protect the privacy of your users by encrypting fields that contain personal information, such as `identity` and `ip`. [attr_encrypted](https://github.com/attr-encrypted/attr_encrypted) is great for this.
 
 ```ruby
 class LoginActivity < ApplicationRecord
