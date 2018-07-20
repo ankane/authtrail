@@ -86,12 +86,12 @@ AuthTrail.track(activity_type: "phone_change", user: user)
 Associate account activity with your user model
 
 ```ruby
-class Manager < ApplicationRecord
+class Admin < ApplicationRecord
   has_many :login_activities, as: :user
 end
 ```
 
-The `AccountActivity` model uses a [polymorphic](http://guides.rubyonrails.org/association_basics.html#polymorphic-associations) association, so login activities can belong to different models (User, Admin, Manager, etc).
+The `AccountActivity` model uses a [polymorphic association](http://guides.rubyonrails.org/association_basics.html#polymorphic-associations) so it can be associated with different user models.
 
 ## Geocoding
 
