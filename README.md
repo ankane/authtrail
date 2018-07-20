@@ -56,7 +56,7 @@ end
 Use a custom identity method [master]
 
 ```ruby
-AuthTrain.identity_method = lambda do |request, opts, user|
+AuthTrail.identity_method = lambda do |request, opts, user|
   if user
     user.email
   else
