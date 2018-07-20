@@ -49,7 +49,7 @@ There a number of attributes specific to sign in activity.
 
 ## Features
 
-Exclude certain attempts from tracking - useful if you run acceptance tests
+Exclude certain attempts from tracking - useful if you run acceptance tests:
 
 ```ruby
 AuthTrail.exclude_method = lambda do |info|
@@ -70,6 +70,16 @@ Track your own custom activities with:
 ```ruby
 AuthTrail.track(activity_type: "phone_change", user: user)
 ```
+
+Associate `LoginActivity` with your user model:
+
+```ruby
+class Manager < ApplicationRecord
+  has_many :login_activities, as: :user
+end
+```
+
+The `LoginActivity` model uses a [polymorphic](http://guides.rubyonrails.org/association_basics.html#polymorphic-associations) association out of the box, so login activities can belong to different models (User, Admin, Manager, etc).
 
 ## Geocoding
 
@@ -106,9 +116,22 @@ Geocoder.configure(
 )
 ```
 
+## Privacy
+
+Protect the privacy of your users by encrypting fields that contain personal information, such as `identity` and `ip`. [attr_encrypted](https://github.com/attr-encrypted/attr_encrypted) is a great library for this.
+
+```ruby
+class LoginActivity < ApplicationRecord
+  attr_encrypted :identity, ...
+  attr_encrypted :ip, ...
+end
+```
+
 ## Other Notes
 
 We recommend using this in addition to Devise’s `Lockable` module and [Rack::Attack](https://github.com/kickstarter/rack-attack).
+
+Check out [Hardening Devise](https://github.com/ankane/shorts/blob/master/Hardening-Devise.md) and [Secure Rails](https://github.com/ankane/secure_rails) for more best practices.
 
 Works with Rails 5+
 
