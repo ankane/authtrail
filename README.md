@@ -49,7 +49,7 @@ There a number of attributes specific to sign in activity.
 
 ## Features
 
-Exclude certain attempts from tracking - useful if you run acceptance tests:
+Exclude certain attempts from tracking - useful if you run acceptance tests
 
 ```ruby
 AuthTrail.exclude_method = lambda do |info|
@@ -57,7 +57,7 @@ AuthTrail.exclude_method = lambda do |info|
 end
 ```
 
-Write data somewhere other than the `account_activities` table.
+Write data somewhere other than the `account_activities` table
 
 ```ruby
 AuthTrail.track_method = lambda do |info|
@@ -65,13 +65,25 @@ AuthTrail.track_method = lambda do |info|
 end
 ```
 
-Track your own custom activities with:
+Use a custom identity method
+
+```ruby
+AuthTrail.identity_method = lambda do |request, opts, user|
+  if user
+    user.email
+  else
+    request.params.dig(opts[:scope], :email)
+  end
+end
+```
+
+Track your own custom activities
 
 ```ruby
 AuthTrail.track(activity_type: "phone_change", user: user)
 ```
 
-Associate `LoginActivity` with your user model:
+Associate account activity with your user model
 
 ```ruby
 class Manager < ApplicationRecord
@@ -79,7 +91,7 @@ class Manager < ApplicationRecord
 end
 ```
 
-The `LoginActivity` model uses a [polymorphic](http://guides.rubyonrails.org/association_basics.html#polymorphic-associations) association out of the box, so login activities can belong to different models (User, Admin, Manager, etc).
+The `AccountActivity` model uses a [polymorphic](http://guides.rubyonrails.org/association_basics.html#polymorphic-associations) association, so login activities can belong to different models (User, Admin, Manager, etc).
 
 ## Geocoding
 
