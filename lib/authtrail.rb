@@ -43,7 +43,9 @@ module AuthTrail
     }
 
     if request
-      info[:context] = "#{request.params[:controller]}##{request.params[:action]}"
+      if request.params[:controller]
+        info[:context] = "#{request.params[:controller]}##{request.params[:action]}"
+      end
       info[:ip] = request.remote_ip
       info[:user_agent] = request.user_agent
       info[:referrer] = request.referrer
