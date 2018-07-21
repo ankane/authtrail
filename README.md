@@ -121,6 +121,8 @@ class LoginActivity < ApplicationRecord
 end
 ```
 
+You should also make it clear that you collect this information in your privacy policy.
+
 ## Other Notes
 
 We recommend using this in addition to Devise’s `Lockable` module and [Rack::Attack](https://github.com/kickstarter/rack-attack).
