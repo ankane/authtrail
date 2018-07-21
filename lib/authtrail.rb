@@ -29,11 +29,14 @@ module AuthTrail
       success: success,
       failure_reason: failure_reason,
       user: user,
-      context: "#{request.params[:controller]}##{request.params[:action]}",
       ip: request.remote_ip,
       user_agent: request.user_agent,
       referrer: request.referrer
     }
+
+    if request.params[:controller]
+      info[:context] = "#{request.params[:controller]}##{request.params[:action]}"
+    end
 
     # if exclude_method throws an exception, default to not excluding
     exclude = AuthTrail.exclude_method && AuthTrail.safely(default: false) { AuthTrail.exclude_method.call(info) }
