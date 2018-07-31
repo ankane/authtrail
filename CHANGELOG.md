@@ -1,4 +1,4 @@
-## 0.1.2 [unreleased]
+## 0.1.2
 
 - Added `identity_method` option
 - Fixed geocoding
