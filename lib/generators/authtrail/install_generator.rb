@@ -29,7 +29,13 @@ module Authtrail
       end
 
       def migration_version
-        "[#{ActiveRecord::VERSION::MAJOR}.#{ActiveRecord::VERSION::MINOR}]"
+        if rails5?
+          "[#{ActiveRecord::VERSION::MAJOR}.#{ActiveRecord::VERSION::MINOR}]"
+        end
+      end
+
+      def rails5?
+        Rails::VERSION::MAJOR >= 5
       end
     end
   end
