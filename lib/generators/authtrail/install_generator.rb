@@ -25,7 +25,7 @@ module Authtrail
       end
 
       def generate_model
-        template "login_activity_model.rb", "app/models/login_activity.rb"
+        template "login_activity_model.rb", "app/models/login_activity.rb", ar_base_class: ar_base_class, ar_optional_flag: ar_optional_flag
       end
 
       def migration_version
@@ -36,6 +36,16 @@ module Authtrail
 
       def rails5?
         Rails::VERSION::MAJOR >= 5
+      end
+
+      def ar_base_class
+        rails5? ? 'ApplicationRecord' : 'ActiveRecord::Base'
+      end
+
+      def ar_optional_flag
+        if rails5?
+          ', optional: true'
+        end
       end
     end
   end
