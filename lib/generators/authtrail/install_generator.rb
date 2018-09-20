@@ -39,12 +39,12 @@ module Authtrail
       end
 
       def model_base_class
-        rails5? ? 'ApplicationRecord' : 'ActiveRecord::Base'
+        rails5? ? "ApplicationRecord" : "ActiveRecord::Base"
       end
 
       def ar_optional_flag
         if rails5?
-          ', optional: true'
+          ", optional: true"
         end
       end
     end
