@@ -1,5 +1,5 @@
 module AuthTrail
-  class GeocodeJob < ApplicationJob
+  class GeocodeJob < Rails::VERSION::MAJOR >= 5 ? ApplicationJob : ActiveJob::Base
     def perform(login_activity)
       result =
         begin
