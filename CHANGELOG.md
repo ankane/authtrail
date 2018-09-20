@@ -1,3 +1,7 @@
+## 0.1.3 [unreleased]
+
+- Added support for Rails 4.2
+
 ## 0.1.2
 
 - Added `identity_method` option
