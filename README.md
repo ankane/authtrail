@@ -129,7 +129,7 @@ We recommend using this in addition to Devise’s `Lockable` module and [Rack::A
 
 Check out [Hardening Devise](https://github.com/ankane/shorts/blob/master/Hardening-Devise.md) and [Secure Rails](https://github.com/ankane/secure_rails) for more best practices.
 
-Works with Rails 5+
+Works with Rails 4.2+
 
 ## History
 
