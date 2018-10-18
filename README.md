@@ -53,7 +53,7 @@ AuthTrail.track_method = lambda do |info|
 end
 ```
 
-Use a custom identity method [master]
+Use a custom identity method
 
 ```ruby
 AuthTrail.identity_method = lambda do |request, opts, user|
