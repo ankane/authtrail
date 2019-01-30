@@ -1,5 +1,5 @@
 module AuthTrail
-  class GeocodeJob < defined?(ApplicationJob) ? ApplicationJob : ActiveJob::Base
+  class GeocodeJob < (ApplicationJob rescue ActiveJob::Base)
     def perform(login_activity)
       result =
         begin

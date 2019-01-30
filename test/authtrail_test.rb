@@ -8,7 +8,7 @@ class AuthTrailTest < Minitest::Test
   def test_that_geocode_job_inherits_from_active_job_base_if_application_job_not_defined
     fork {
       define_active_job_base
-      require_relative "../app/jobs/auth_trail/geocode_job.rb"
+      require_relative "../app/jobs/auth_trail/geocode_job"
       assert(AuthTrail::GeocodeJob.superclass == ActiveJob::Base)
     }
   end
@@ -17,7 +17,7 @@ class AuthTrailTest < Minitest::Test
     fork {
       define_active_job_base
       define_application_job
-      require_relative "../app/jobs/auth_trail/geocode_job.rb"
+      require_relative "../app/jobs/auth_trail/geocode_job"
       assert(AuthTrail::GeocodeJob.superclass == ApplicationJob)
     }
   end
