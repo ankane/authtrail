@@ -10,12 +10,24 @@ module AuthTrail
         end
 
       if result
-        %w(city country latitude longitude region).each do |attribute|
-          next unless login_activity.respond_to?("#{attribute}=")
-          login_activity.send("#{attribute}=", result.try(attribute).presence)
+        geocode_to_login_activity_mapping.each do |geocode_attr, login_activity_attr|
+          next unless login_activity.respond_to?("#{login_activity_attr}=")
+          login_activity.send("#{login_activity_attr}=", result.try(geocode_attr).presence)
         end
         login_activity.save!
       end
+    end
+
+    private
+
+    def geocode_to_login_activity_mapping
+      {
+        city: :city,
+        country: :country,
+        latitude: :latitude,
+        longitude: :longitude,
+        state: :region,
+      }
     end
   end
 end
