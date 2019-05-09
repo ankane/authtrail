@@ -10,13 +10,15 @@ module AuthTrail
         end
 
       if result
-        login_activity.assign_attributes(
-          city: result.try(:city).presence,
-          region: result.try(:state).presence,
-          country: result.try(:country).presence
-        )
-        %w(latitude longitude).each do |attribute|
-          login_activity.try("#{attribute}=", result.try(attribute).presence)
+        attributes = {
+          city: result.try(:city),
+          region: result.try(:state),
+          country: result.try(:country),
+          latitude: result.try(:latitude),
+          longitude: result.try(:longitude)
+        }
+        attributes.each do |k, v|
+          login_activity.try("#{k}=", v.presence)
         end
         login_activity.save!
       end
