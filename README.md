@@ -112,7 +112,7 @@ Geocoder.configure(
 
 ## Data Protection
 
-Protect the privacy of your users by encrypting fields that contain personal information, such as `identity` and `ip`. [attr_encrypted](https://github.com/attr-encrypted/attr_encrypted) is great for this. Use [blind_index](https://github.com/ankane/blind_index) if you need to query fields.
+Protect the privacy of your users by encrypting fields that contain personal information, such as `identity` and `ip`. [attr_encrypted](https://github.com/attr-encrypted/attr_encrypted) is great for this. Use [blind_index](https://github.com/ankane/blind_index) so you can still query the fields.
 
 ```ruby
 class LoginActivity < ApplicationRecord
@@ -123,8 +123,6 @@ class LoginActivity < ApplicationRecord
   blind_index :ip, key: ...
 end
 ```
-
-You should also make it clear that you collect this information in your privacy policy.
 
 ## Other Notes
 
