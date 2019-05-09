@@ -33,6 +33,7 @@ A `LoginActivity` record is created every time a user tries to login. You can th
 - `ip` - IP address
 - `user_agent` and `referrer` - from browser
 - `city`, `region`, and `country` - from IP
+- `latitude` and `longitude` - from IP (see "Coordinates" below)
 - `created_at` - time of event
 
 ## Features
@@ -87,6 +88,13 @@ Set job queue for geocoding
 
 ```ruby
 AuthTrail::GeocodeJob.queue_as :low
+```
+
+### Coordinates
+
+If you want to store latitude/longitude coordinates, but you installed version 0.1.3 or before, you need to add coordinates columns to your database. Generate another migration:
+```ruby
+bundle exec rails g migration AddCoordinatesToLoginActivities latitude:float longitude:float
 ```
 
 ### Geocoding Performance
