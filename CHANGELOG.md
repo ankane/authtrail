@@ -1,3 +1,7 @@
+## 0.1.4 [unreleased]
+
+- Added latitude and longitude
+
 ## 0.1.3
 
 - Added support for Rails 4.2

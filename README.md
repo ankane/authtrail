@@ -32,8 +32,7 @@ A `LoginActivity` record is created every time a user tries to login. You can th
 - `context` - controller and action
 - `ip` - IP address
 - `user_agent` and `referrer` - from browser
-- `city`, `region`, and `country` - from IP
-- `latitude` and `longitude` - from IP (see "Coordinates" below)
+- `city`, `region`, `country`, `latitude`, and `longitude` - from IP
 - `created_at` - time of event
 
 ## Features
@@ -90,13 +89,6 @@ Set job queue for geocoding
 AuthTrail::GeocodeJob.queue_as :low
 ```
 
-### Coordinates
-
-If you want to store latitude/longitude coordinates, but you installed version 0.1.3 or before, you need to add coordinates columns to your database. Generate another migration:
-```ruby
-bundle exec rails g migration AddCoordinatesToLoginActivities latitude:float longitude:float
-```
-
 ### Geocoding Performance
 
 To avoid calls to a remote API, download the [GeoLite2 City database](https://dev.maxmind.com/geoip/geoip2/geolite2/) and configure Geocoder to use it.
@@ -141,6 +133,17 @@ We recommend using this in addition to Devise’s `Lockable` module and [Rack::A
 Check out [Hardening Devise](https://ankane.org/hardening-devise) and [Secure Rails](https://github.com/ankane/secure_rails) for more best practices.
 
 Works with Rails 4.2+
+
+## Upgrading
+
+### 0.1.4 [master]
+
+To store latitude and longitude, create a migration with:
+
+```ruby
+add_column :login_activities, :latitude, :decimal, precision: 10, scale: 8
+add_column :login_activities, :longitude, :decimal, precision: 11, scale: 8
+```
 
 ## History
 
