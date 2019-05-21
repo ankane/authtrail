@@ -45,6 +45,25 @@ AuthTrail.exclude_method = lambda do |info|
 end
 ```
 
+Define custom attributes to be persisted 
+
+```ruby
+AuthTrail.login_activity_attributes_method = lambda do |strategy, scope, identity, success, request, user, failure_reason|
+  {
+    strategy:       strategy,
+    scope:          scope,
+    identity:       identity,
+    success:        success,
+    failure_reason: failure_reason,
+    user:           user,
+    ip:             request.remote_ip,
+    user_agent:     request.user_agent,
+    referrer:       request.referrer,
+    my_custom_value:'some value'
+  }
+end
+``` 
+
 Write data somewhere other than the `login_activities` table
 
 ```ruby
