@@ -2,6 +2,7 @@
 
 - Added latitude and longitude
 - `AuthTrail::GeocodeJob` now inherits from `ActiveJob::Base` instead of `ApplicationJob`
+- Removed support for Rails 4.2
 
 ## 0.1.3
 

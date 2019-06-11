@@ -16,10 +16,10 @@ Gem::Specification.new do |spec|
   spec.files         = Dir["*.{md,txt}", "{app,lib}/**/*"]
   spec.require_path  = "lib"
 
-  spec.required_ruby_version = ">= 2.2"
+  spec.required_ruby_version = ">= 2.4"
 
-  spec.add_dependency "railties", ">= 4.2"
-  spec.add_dependency "activerecord", ">= 4.2"
+  spec.add_dependency "railties", ">= 5"
+  spec.add_dependency "activerecord", ">= 5"
   spec.add_dependency "warden"
   spec.add_dependency "geocoder"
 

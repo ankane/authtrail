@@ -1,3 +1,3 @@
-class LoginActivity < <%= model_base_class %>
-  belongs_to :user, polymorphic: true<%= ar_optional_flag %>
+class LoginActivity < ApplicationRecord
+  belongs_to :user, polymorphic: true, optional: true
 end
