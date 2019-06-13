@@ -73,7 +73,7 @@ class User < ApplicationRecord
 end
 ```
 
-The `LoginActivity` model uses a [polymorphic association](http://guides.rubyonrails.org/association_basics.html#polymorphic-associations) so it can be associated with different user models.
+The `LoginActivity` model uses a [polymorphic association](https://guides.rubyonrails.org/association_basics.html#polymorphic-associations) so it can be associated with different user models.
 
 ## Geocoding
 
