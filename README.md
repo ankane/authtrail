@@ -134,13 +134,13 @@ Works with Rails 4.2+
 
 ## Upgrading
 
-### 0.1.4 [master]
+### 0.2.0 [master]
 
 To store latitude and longitude, create a migration with:
 
 ```ruby
-add_column :login_activities, :latitude, :decimal, precision: 10, scale: 8
-add_column :login_activities, :longitude, :decimal, precision: 11, scale: 8
+add_column :login_activities, :latitude, :float
+add_column :login_activities, :longitude, :float
 ```
 
 ## History
