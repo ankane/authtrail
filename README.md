@@ -130,11 +130,9 @@ We recommend using this in addition to Devise’s `Lockable` module and [Rack::A
 
 Check out [Hardening Devise](https://ankane.org/hardening-devise) and [Secure Rails](https://github.com/ankane/secure_rails) for more best practices.
 
-Works with Rails 4.2+
-
 ## Upgrading
 
-### 0.2.0 [master]
+### 0.2.0
 
 To store latitude and longitude, create a migration with:
 

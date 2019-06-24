@@ -1,4 +1,4 @@
-## 0.2.0 [unreleased]
+## 0.2.0
 
 - Added latitude and longitude
 - `AuthTrail::GeocodeJob` now inherits from `ActiveJob::Base` instead of `ApplicationJob`
