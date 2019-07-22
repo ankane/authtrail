@@ -1,7 +1,8 @@
 require "bundler/setup"
-Bundler.require(:default, :development)
+Bundler.require(:development)
 require "minitest/autorun"
 require "minitest/pride"
+require "warden"
 
 class PasswordStrategy < Warden::Strategies::Base
   def authenticate!
