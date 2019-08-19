@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
-git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
-
 # Specify your gem's dependencies in authtrail.gemspec
 gemspec
+
+gem "railties", "~> 6.0.0"
+gem "activerecord", "~> 6.0.0"
