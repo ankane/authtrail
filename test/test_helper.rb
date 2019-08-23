@@ -7,7 +7,13 @@ require "warden"
 class PasswordStrategy < Warden::Strategies::Base
   def authenticate!
     u = User.find_by(email: params.dig("user", "email"))
-    u.nil? ? fail!("Could not sign in") : success!(u)
+
+    if u.nil? || params.dig('user', 'password') != 'sEcReT'
+      fail!("Could not sign in")
+    else
+      success!(u)
+    end
+
   end
 end
 

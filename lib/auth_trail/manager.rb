@@ -20,14 +20,17 @@ module AuthTrail
       def before_failure(env, opts)
         AuthTrail.safely do
           if opts[:message]
-            request = ActionDispatch::Request.new(env)
+            request  = ActionDispatch::Request.new(env)
+            identity = AuthTrail.identity_method.call(request, opts, nil)
+            user     = AuthTrail.identity_fetch_method.call(identity)
 
             AuthTrail.track(
               strategy: detect_strategy(env["warden"]),
               scope: opts[:scope].to_s,
-              identity: AuthTrail.identity_method.call(request, opts, nil),
+              identity: identity,
               success: false,
               request: request,
+              user: user,
               failure_reason: opts[:message].to_s
             )
           end
