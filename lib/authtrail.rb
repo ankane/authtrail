@@ -9,7 +9,7 @@ require "auth_trail/version"
 
 module AuthTrail
   class << self
-    attr_accessor :exclude_method, :geocode, :track_method, :identity_method
+    attr_accessor :exclude_method, :geocode, :track_method, :identity_method, :ip_method
   end
   self.geocode = true
   self.identity_method = lambda do |request, opts, user|
@@ -21,7 +21,11 @@ module AuthTrail
     end
   end
 
-  def self.track(strategy:, scope:, identity:, success:, request:, user: nil, failure_reason: nil)
+  self.ip_method = lambda do |request|
+    request.remote_ip
+  end
+
+  def self.track(strategy:, scope:, identity:, success:, request:, ip:, user: nil, failure_reason: nil)
     info = {
       strategy: strategy,
       scope: scope,
@@ -29,7 +33,7 @@ module AuthTrail
       success: success,
       failure_reason: failure_reason,
       user: user,
-      ip: request.remote_ip,
+      ip: ip,
       user_agent: request.user_agent,
       referrer: request.referrer
     }

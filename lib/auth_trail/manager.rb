@@ -12,6 +12,7 @@ module AuthTrail
             identity: AuthTrail.identity_method.call(request, opts, user),
             success: true,
             request: request,
+            ip: AuthTrail.ip_method.call(request),
             user: user
           )
         end
@@ -28,6 +29,7 @@ module AuthTrail
               identity: AuthTrail.identity_method.call(request, opts, nil),
               success: false,
               request: request,
+              ip: AuthTrail.ip_method.call(request),
               failure_reason: opts[:message].to_s
             )
           end
