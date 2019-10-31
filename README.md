@@ -67,6 +67,14 @@ AuthTrail.identity_method = lambda do |request, opts, user|
 end
 ```
 
+Use a custom method for the logged ip
+
+```ruby
+AuthTrail.ip_method = lambda do |request|
+  IPAddr.new(request.headers['X-Forwarded-For'])
+end
+```
+
 Associate login activity with your user model
 
 ```ruby
