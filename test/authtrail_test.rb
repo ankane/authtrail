@@ -40,7 +40,7 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
   def test_failure_with_recoverable_user
     user = User.create!(email: "test@example.org")
 
-    AuthTrail.identity_fetch_method = ->(identity) do
+    AuthTrail.failure_user_method = ->(identity) do
       User.find_by(email: identity)
     end
 

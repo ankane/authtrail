@@ -9,7 +9,7 @@ require "auth_trail/version"
 
 module AuthTrail
   class << self
-    attr_accessor :exclude_method, :geocode, :track_method, :identity_method, :identity_fetch_method
+    attr_accessor :exclude_method, :geocode, :track_method, :identity_method, :failure_user_method
   end
   self.geocode = true
   self.identity_method = lambda do |request, opts, user|
@@ -21,7 +21,7 @@ module AuthTrail
     end
   end
 
-  self.identity_fetch_method = lambda do |identity|
+  self.failure_user_method = lambda do |identity|
   end
 
   def self.track(strategy:, scope:, identity:, success:, request:, user: nil, failure_reason: nil)

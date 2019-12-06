@@ -22,7 +22,7 @@ module AuthTrail
           if opts[:message]
             request  = ActionDispatch::Request.new(env)
             identity = AuthTrail.identity_method.call(request, opts, nil)
-            user     = AuthTrail.identity_fetch_method.call(identity)
+            user     = AuthTrail.failure_user_method.call(identity)
 
             AuthTrail.track(
               strategy: detect_strategy(env["warden"]),
