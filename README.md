@@ -67,6 +67,14 @@ AuthTrail.identity_method = lambda do |request, opts, user|
 end
 ```
 
+Associate failed login attemps
+
+```ruby
+AuthTrail.failure_user_method = ->(identity) do
+  User.find_by(email: identity)
+end
+```
+
 Associate login activity with your user model
 
 ```ruby
