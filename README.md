@@ -114,7 +114,7 @@ Geocoder.configure(
 
 ## Data Protection
 
-Protect the privacy of your users by encrypting fields that contain personal information, such as `identity` and `ip`. [Lockbox](https://github.com/ankane/lockbox) is great for this. Use [Blind Index](https://github.com/ankane/blind_index) so you can still query the fields.
+Protect the privacy of your users by encrypting fields that contain personal data, such as `identity` and `ip`. [Lockbox](https://github.com/ankane/lockbox) is great for this. Use [Blind Index](https://github.com/ankane/blind_index) so you can still query the fields.
 
 ```ruby
 class LoginActivity < ApplicationRecord
