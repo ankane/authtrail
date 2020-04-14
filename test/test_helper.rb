@@ -26,3 +26,7 @@ Combustion.initialize! :active_record, :action_controller do
 end
 
 AuthTrail.geocode = false
+
+AuthTrail.exclude_method = lambda do |info|
+  info[:identity] == "exclude@example.org"
+end

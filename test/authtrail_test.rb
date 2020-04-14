@@ -36,4 +36,10 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     assert_nil login_activity.user
     assert_equal "users#sign_in", login_activity.context
   end
+
+  def test_exclude_method
+    post users_sign_in_url, params: {user: {email: "exclude@example.org"}}
+    assert_response :unauthorized
+    assert_equal 0, LoginActivity.count
+  end
 end
