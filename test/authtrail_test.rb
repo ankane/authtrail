@@ -46,6 +46,6 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     skip if Rails::VERSION::MAJOR < 6
 
     post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
-    assert_enqueued_with(job: AuthTrail::GeocodeJob)
+    assert_enqueued_with(job: AuthTrail::GeocodeJob, args: [LoginActivity.last])
   end
 end
