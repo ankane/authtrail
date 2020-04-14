@@ -66,5 +66,5 @@ Warden::Manager.after_set_user except: :fetch do |user, auth, opts|
 end
 
 Warden::Manager.before_failure do |env, opts|
-  AuthTrail::Manager.before_failure(env, opts)
+  AuthTrail::Manager.before_failure(env, opts) if opts[:message]
 end

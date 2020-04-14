@@ -19,18 +19,16 @@ module AuthTrail
 
       def before_failure(env, opts)
         AuthTrail.safely do
-          if opts[:message]
-            request = ActionDispatch::Request.new(env)
+          request = ActionDispatch::Request.new(env)
 
-            AuthTrail.track(
-              strategy: detect_strategy(env["warden"]),
-              scope: opts[:scope].to_s,
-              identity: AuthTrail.identity_method.call(request, opts, nil),
-              success: false,
-              request: request,
-              failure_reason: opts[:message].to_s
-            )
-          end
+          AuthTrail.track(
+            strategy: detect_strategy(env["warden"]),
+            scope: opts[:scope].to_s,
+            identity: AuthTrail.identity_method.call(request, opts, nil),
+            success: false,
+            request: request,
+            failure_reason: opts[:message].to_s
+          )
         end
       end
 
