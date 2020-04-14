@@ -18,9 +18,11 @@ Combustion.initialize! :active_record, :action_controller, :active_job do
   end
 
   config.active_job.queue_adapter = :test
-end
 
-ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT) if ENV["VERBOSE"]
+  logger = ActiveSupport::Logger.new(ENV["VERBOSE"] ? STDOUT : nil)
+  config.active_record.logger = logger
+  config.active_job.logger = logger
+end
 
 AuthTrail.exclude_method = lambda do |info|
   info[:identity] == "exclude@example.org"
