@@ -99,6 +99,19 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     assert_equal "devise/sessions#create", login_activity.context
   end
 
+  def test_unlocked
+    user = create_user
+    post user_session_url, params: {user: {email: "test@example.org", password: "bad"}}
+    post user_session_url, params: {user: {email: "test@example.org", password: "bad"}}
+    unlock_token = /unlock_token=([A-Za-z0-9\-_]+)/.match(ActionMailer::Base.deliveries.last.body.to_s)
+    get user_unlock_url, params: {unlock_token: unlock_token[1]}
+    assert_response :found
+
+    login_activity = LoginActivity.find_by!(activity_type: "unlocked")
+    assert_equal user, login_activity.user
+    assert_equal "devise/unlocks#show", login_activity.context
+  end
+
   def test_change_email_record
     user = create_user
     user.update!(email: "new@example.org")
