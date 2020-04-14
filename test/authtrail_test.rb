@@ -7,38 +7,38 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
   end
 
   def test_success
-    user = User.create!(email: "test@example.org")
-    post users_sign_in_url, params: {user: {email: "test@example.org"}}
-    assert_response :success
+    user = User.create!(email: "test@example.org", password: "secret")
+    post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
+    assert_response :found
 
     assert_equal 1, LoginActivity.count
     login_activity = LoginActivity.last
     assert_equal "user", login_activity.scope
-    assert_equal "password_strategy", login_activity.strategy
+    assert_equal "database_authenticatable", login_activity.strategy
     assert_equal "test@example.org", login_activity.identity
     assert login_activity.success
     assert_nil login_activity.failure_reason
     assert_equal user, login_activity.user
-    assert_equal "users#sign_in", login_activity.context
+    assert_equal "devise/sessions#create", login_activity.context
   end
 
   def test_failure
-    post users_sign_in_url, params: {user: {email: "test@example.org"}}
+    post user_session_url, params: {user: {email: "test@example.org", password: "bad"}}
     assert_response :unauthorized
 
     assert_equal 1, LoginActivity.count
     login_activity = LoginActivity.last
     assert_equal "user", login_activity.scope
-    assert_equal "password_strategy", login_activity.strategy
+    assert_equal "database_authenticatable", login_activity.strategy
     assert_equal "test@example.org", login_activity.identity
     refute login_activity.success
-    assert_equal "Could not sign in", login_activity.failure_reason
+    assert_equal "not_found_in_database", login_activity.failure_reason
     assert_nil login_activity.user
-    assert_equal "users#sign_in", login_activity.context
+    assert_equal "devise/sessions#create", login_activity.context
   end
 
   def test_exclude_method
-    post users_sign_in_url, params: {user: {email: "exclude@example.org"}}
+    post user_session_url, params: {user: {email: "exclude@example.org"}}
     assert_response :unauthorized
     assert_empty LoginActivity.all
   end
