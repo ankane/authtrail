@@ -1,5 +1,6 @@
 ActiveRecord::Schema.define do
   create_table :login_activities do |t|
+    t.string :activity_type
     t.string :scope
     t.string :strategy
     t.string :identity

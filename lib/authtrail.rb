@@ -21,8 +21,9 @@ module AuthTrail
     end
   end
 
-  def self.track(strategy:, scope:, identity:, success:, request:, user: nil, failure_reason: nil)
+  def self.track(strategy:, scope:, identity: nil, success:, request:, user: nil, failure_reason: nil, activity_type:)
     info = {
+      activity_type: activity_type,
       strategy: strategy,
       scope: scope,
       identity: identity,
@@ -67,4 +68,8 @@ end
 
 Warden::Manager.before_failure do |env, opts|
   AuthTrail::Manager.before_failure(env, opts) if opts[:message]
+end
+
+Warden::Manager.before_logout do |user, auth, opts|
+  AuthTrail::Manager.before_logout(user, auth, opts) if user
 end
