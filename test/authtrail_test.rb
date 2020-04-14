@@ -109,7 +109,7 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     assert_nil login_activity.context
   end
 
-  def test_exclude
+  def test_exclude_method
     user = create_user(email: "exclude@example.org")
     user.update!(password: "secret2")
     assert_empty LoginActivity.all
