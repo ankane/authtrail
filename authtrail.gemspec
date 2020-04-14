@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "railties", ">= 5"
   spec.add_dependency "activerecord", ">= 5"
-  spec.add_dependency "warden"
+  spec.add_dependency "devise"
   spec.add_dependency "geocoder"
 
   spec.add_development_dependency "bundler"
@@ -29,5 +29,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "combustion"
   spec.add_development_dependency "rails"
   spec.add_development_dependency "sqlite3"
-  spec.add_development_dependency "devise"
+  spec.add_development_dependency "actionmailer"
 end

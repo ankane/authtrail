@@ -53,6 +53,42 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     assert_equal "devise/sessions#destroy", login_activity.context
   end
 
+  def test_change_email
+    user = create_user
+    sign_in user
+    patch user_registration_url, params: {user: {email: "new@example.org", current_password: "secret"}}
+    assert_response :found
+
+    login_activity = LoginActivity.last
+    assert_equal "email_change", login_activity.activity_type
+    assert_equal user, login_activity.user
+    assert_equal "devise/registrations#update", login_activity.context
+  end
+
+  def test_change_password
+    user = create_user
+    sign_in user
+    # confirmation not needed as long as confirmation field not present
+    patch user_registration_url, params: {user: {password: "secret2", current_password: "secret"}}
+    assert_response :found
+
+    login_activity = LoginActivity.last
+    assert_equal "password_change", login_activity.activity_type
+    assert_equal user, login_activity.user
+    assert_equal "devise/registrations#update", login_activity.context
+  end
+
+  def test_reset_password
+    user = create_user
+    post user_password_url, params: {user: {email: "test@example.org"}}
+    assert_response :found
+
+    login_activity = LoginActivity.last
+    assert_equal "password_reset_request", login_activity.activity_type
+    assert_equal user, login_activity.user
+    assert_equal "devise/passwords#create", login_activity.context
+  end
+
   private
 
   def create_user

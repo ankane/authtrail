@@ -1,5 +1,6 @@
 ## 0.3.0 (unreleased)
 
+- Expanded to more activities - sign outs, password resets, email changes, and password changes
 - Raise an exception when auditing fails
 
 ## 0.2.0 (2019-06-23)

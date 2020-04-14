@@ -1,11 +1,16 @@
 # dependencies
+require "active_support"
 require "geocoder"
 require "warden"
 
 # modules
+require "auth_trail/controller"
 require "auth_trail/engine"
 require "auth_trail/manager"
 require "auth_trail/version"
+
+# integrations
+require "devise/models/trailable"
 
 module AuthTrail
   class << self
@@ -21,7 +26,9 @@ module AuthTrail
     end
   end
 
-  def self.track(strategy:, scope:, identity: nil, success:, request:, user: nil, failure_reason: nil, activity_type:)
+  def self.track(strategy: nil, scope: nil, identity: nil, success: nil, request: nil, user: nil, failure_reason: nil, activity_type:)
+    request ||= Thread.current[:authtrail_request]
+
     info = {
       activity_type: activity_type,
       strategy: strategy,
@@ -29,14 +36,16 @@ module AuthTrail
       identity: identity,
       success: success,
       failure_reason: failure_reason,
-      user: user,
-      ip: request.remote_ip,
-      user_agent: request.user_agent,
-      referrer: request.referrer
+      user: user
     }
 
-    if request.params[:controller]
-      info[:context] = "#{request.params[:controller]}##{request.params[:action]}"
+    if request
+      if request.params[:controller]
+        info[:context] = "#{request.params[:controller]}##{request.params[:action]}"
+      end
+      info[:ip] = request.remote_ip
+      info[:user_agent] = request.user_agent
+      info[:referrer] = request.referrer
     end
 
     # if exclude_method throws an exception, default to not excluding
@@ -72,4 +81,8 @@ end
 
 Warden::Manager.before_logout do |user, auth, opts|
   AuthTrail::Manager.before_logout(user, auth, opts) if user
+end
+
+ActiveSupport.on_load(:action_controller) do
+  include AuthTrail::Controller
 end
