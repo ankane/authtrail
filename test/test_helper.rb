@@ -12,6 +12,8 @@ Devise.setup do |config|
   end
 
   config.mailer_sender = "sender@example.org"
+
+  config.maximum_attempts = 2
 end
 
 Combustion.path = "test/internal"

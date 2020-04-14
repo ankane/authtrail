@@ -89,6 +89,16 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     assert_equal "devise/passwords#create", login_activity.context
   end
 
+  def test_locked
+    user = create_user
+    post user_session_url, params: {user: {email: "test@example.org", password: "bad"}}
+    post user_session_url, params: {user: {email: "test@example.org", password: "bad"}}
+
+    login_activity = LoginActivity.find_by!(activity_type: "locked")
+    assert_equal user, login_activity.user
+    assert_equal "devise/sessions#create", login_activity.context
+  end
+
   def test_change_email_record
     user = create_user
     user.update!(email: "new@example.org")
