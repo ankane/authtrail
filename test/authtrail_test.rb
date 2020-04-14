@@ -89,6 +89,16 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     assert_equal "devise/passwords#create", login_activity.context
   end
 
+  def test_confirm
+    post user_registration_url, params: {user: {email: "test@example.org", password: "secret"}}
+    get user_confirmation_url, params: {confirmation_token: last_token}
+
+    user = User.last
+    login_activity = LoginActivity.find_by!(activity_type: "confirm")
+    assert_equal user, login_activity.user
+    assert_equal "devise/confirmations#show", login_activity.context
+  end
+
   def test_lock
     user = create_user
     post user_session_url, params: {user: {email: "test@example.org", password: "bad"}}
@@ -103,8 +113,7 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     user = create_user
     post user_session_url, params: {user: {email: "test@example.org", password: "bad"}}
     post user_session_url, params: {user: {email: "test@example.org", password: "bad"}}
-    unlock_token = /unlock_token=([A-Za-z0-9\-_]+)/.match(ActionMailer::Base.deliveries.last.body.to_s)
-    get user_unlock_url, params: {unlock_token: unlock_token[1]}
+    get user_unlock_url, params: {unlock_token: last_token}
     assert_response :found
 
     login_activity = LoginActivity.find_by!(activity_type: "unlock")
@@ -141,6 +150,11 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
   private
 
   def create_user(attributes = {})
-    User.create!({email: "test@example.org", password: "secret"}.merge(attributes))
+    User.create!({email: "test@example.org", password: "secret", confirmed_at: Time.now}.merge(attributes))
+  end
+
+  def last_token
+    m = /token=([A-Za-z0-9\-_]+)/.match(ActionMailer::Base.deliveries.last.body.to_s)
+    m[1] if m
   end
 end

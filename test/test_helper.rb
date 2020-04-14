@@ -14,6 +14,8 @@ Devise.setup do |config|
   config.mailer_sender = "sender@example.org"
 
   config.maximum_attempts = 2
+
+  config.reconfirmable = false
 end
 
 Combustion.path = "test/internal"
@@ -24,6 +26,8 @@ Combustion.initialize! :active_record, :action_controller, :action_mailer do
 end
 
 ActionMailer::Base.delivery_method = :test
+
+ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT) if ENV["VERBOSE"]
 
 AuthTrail.geocode = false
 
