@@ -20,6 +20,7 @@ Combustion.initialize! :active_record, :action_controller, :active_job do
   config.active_job.queue_adapter = :test
 
   logger = ActiveSupport::Logger.new(ENV["VERBOSE"] ? STDOUT : nil)
+  config.action_controller.logger = logger
   config.active_record.logger = logger
   config.active_job.logger = logger
 end
