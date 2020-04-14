@@ -1,6 +1,6 @@
 ## 0.3.0 (unreleased)
 
-- Expanded to more activities - sign outs, password resets, email changes, and password changes
+- Expanded to more activities - sign outs, email changes, password changes, password reset requests, locks, unlocks, and confirmations
 - Raise an exception when auditing fails
 
 ## 0.2.0 (2019-06-23)
