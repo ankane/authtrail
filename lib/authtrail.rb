@@ -45,7 +45,11 @@ module AuthTrail
       if AuthTrail.track_method
         AuthTrail.track_method.call(info)
       else
-        login_activity = LoginActivity.create!(info)
+        login_activity = LoginActivity.new
+        info.each do |k, v|
+          login_activity.try("#{k}=", v)
+        end
+        login_activity.save!
         AuthTrail::GeocodeJob.perform_later(login_activity) if AuthTrail.geocode
       end
     end
