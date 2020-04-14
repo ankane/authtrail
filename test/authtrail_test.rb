@@ -89,17 +89,17 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     assert_equal "devise/passwords#create", login_activity.context
   end
 
-  def test_locked
+  def test_lock
     user = create_user
     post user_session_url, params: {user: {email: "test@example.org", password: "bad"}}
     post user_session_url, params: {user: {email: "test@example.org", password: "bad"}}
 
-    login_activity = LoginActivity.find_by!(activity_type: "locked")
+    login_activity = LoginActivity.find_by!(activity_type: "lock")
     assert_equal user, login_activity.user
     assert_equal "devise/sessions#create", login_activity.context
   end
 
-  def test_unlocked
+  def test_unlock
     user = create_user
     post user_session_url, params: {user: {email: "test@example.org", password: "bad"}}
     post user_session_url, params: {user: {email: "test@example.org", password: "bad"}}
@@ -107,7 +107,7 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     get user_unlock_url, params: {unlock_token: unlock_token[1]}
     assert_response :found
 
-    login_activity = LoginActivity.find_by!(activity_type: "unlocked")
+    login_activity = LoginActivity.find_by!(activity_type: "unlock")
     assert_equal user, login_activity.user
     assert_equal "devise/unlocks#show", login_activity.context
   end
