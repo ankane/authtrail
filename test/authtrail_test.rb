@@ -4,8 +4,8 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   def setup
-    LoginActivity.delete_all
     User.delete_all
+    LoginActivity.delete_all
   end
 
   def test_sign_in_success
