@@ -6,6 +6,6 @@
 /pkg/
 /spec/reports/
 /tmp/
-Gemfile.lock
+*.lock
 *.log
 *.sqlite
