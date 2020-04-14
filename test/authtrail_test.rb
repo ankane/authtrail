@@ -89,6 +89,26 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     assert_equal "devise/passwords#create", login_activity.context
   end
 
+  def test_change_email_record
+    user = create_user
+    user.update!(email: "new@example.org")
+
+    login_activity = LoginActivity.last
+    assert_equal "email_change", login_activity.activity_type
+    assert_equal user, login_activity.user
+    assert_nil login_activity.context
+  end
+
+  def test_change_password_record
+    user = create_user
+    user.update!(password: "secret2")
+
+    login_activity = LoginActivity.last
+    assert_equal "password_change", login_activity.activity_type
+    assert_equal user, login_activity.user
+    assert_nil login_activity.context
+  end
+
   private
 
   def create_user
