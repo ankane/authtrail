@@ -11,7 +11,7 @@ Devise.setup do |config|
     manager.failure_app = ->(env) { [401, {"Content-Type" => "text/html"}, "Unauthorized"] }
   end
 
-  config.mailer_sender = "test@example.com"
+  config.mailer_sender = "sender@example.org"
 end
 
 Combustion.path = "test/internal"
@@ -24,3 +24,7 @@ end
 ActionMailer::Base.delivery_method = :test
 
 AuthTrail.geocode = false
+
+AuthTrail.exclude_method = lambda do |info|
+  info[:user] && info[:user].email == "exclude@example.org"
+end
