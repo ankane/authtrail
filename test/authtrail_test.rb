@@ -41,4 +41,11 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     post user_session_url, params: {user: {email: "exclude@example.org", password: "secret"}}
     assert_empty LoginActivity.all
   end
+
+  def test_geocode_job_enqueued
+    skip if Rails::VERSION::MAJOR < 6
+
+    post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
+    assert_enqueued_with(job: AuthTrail::GeocodeJob)
+  end
 end
