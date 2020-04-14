@@ -142,8 +142,7 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
   end
 
   def test_exclude_method
-    user = create_user(email: "exclude@example.org")
-    user.update!(password: "secret2")
+    post user_session_url, params: {user: {email: "exclude@example.org", password: "secret"}}
     assert_empty LoginActivity.all
   end
 
