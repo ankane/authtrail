@@ -1,3 +1,7 @@
+## 0.3.0 (unreleased)
+
+- Raise an exception when auditing fails
+
 ## 0.2.0 (2019-06-23)
 
 - Added latitude and longitude
