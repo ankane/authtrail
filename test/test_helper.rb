@@ -18,6 +18,8 @@ Combustion.initialize! :active_record, :action_controller do
   end
 end
 
+ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT) if ENV["VERBOSE"]
+
 AuthTrail.geocode = false
 
 AuthTrail.exclude_method = lambda do |info|
