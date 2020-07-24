@@ -1,6 +1,5 @@
 dist: bionic
 language: ruby
-rvm: 2.7
 jobs:
   include:
     - rvm: 2.7
