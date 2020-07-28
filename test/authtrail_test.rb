@@ -1,6 +1,8 @@
 require_relative "test_helper"
 
 class AuthTrailTest < ActionDispatch::IntegrationTest
+  include ActiveJob::TestHelper # for Rails < 6
+
   def setup
     User.delete_all
     LoginActivity.delete_all
@@ -43,9 +45,8 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
   end
 
   def test_geocode_job_enqueued
-    skip if Rails::VERSION::MAJOR < 6
-
-    post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
-    assert_enqueued_with(job: AuthTrail::GeocodeJob, args: [LoginActivity.last])
+    assert_enqueued_with(job: AuthTrail::GeocodeJob) do
+      post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
+    end
   end
 end
