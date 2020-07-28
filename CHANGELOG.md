@@ -1,3 +1,7 @@
+## 0.2.1 (unreleased)
+
+- Added `job_queue` option
+
 ## 0.2.0 (2019-06-23)
 
 - Added latitude and longitude

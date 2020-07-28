@@ -9,7 +9,7 @@ require "auth_trail/version"
 
 module AuthTrail
   class << self
-    attr_accessor :exclude_method, :geocode, :track_method, :identity_method
+    attr_accessor :exclude_method, :geocode, :track_method, :identity_method, :job_queue
   end
   self.geocode = true
   self.identity_method = lambda do |request, opts, user|

@@ -28,3 +28,22 @@ end
 AuthTrail.exclude_method = lambda do |info|
   info[:identity] == "exclude@example.org"
 end
+
+class Minitest::Test
+  def with_options(options)
+    previous_options = {}
+    options.each_key do |k|
+      previous_options[k] = AuthTrail.send(k)
+    end
+    begin
+      options.each do |k, v|
+        AuthTrail.send("#{k}=", v)
+      end
+      yield
+    ensure
+      previous_options.each do |k, v|
+        AuthTrail.send("#{k}=", v)
+      end
+    end
+  end
+end

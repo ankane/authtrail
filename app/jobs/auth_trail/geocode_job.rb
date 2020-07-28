@@ -1,5 +1,9 @@
 module AuthTrail
   class GeocodeJob < ActiveJob::Base
+    # default queue is used if queue_as returns nil
+    # Rails has a test for this
+    queue_as { AuthTrail.job_queue }
+
     def perform(login_activity)
       result =
         begin
