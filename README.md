@@ -85,7 +85,7 @@ IP geocoding is performed in a background job so it doesn’t slow down web requ
 AuthTrail.geocode = false
 ```
 
-Set job queue for geocoding [master]
+Set job queue for geocoding
 
 ```ruby
 AuthTrail.job_queue = :low_priority
