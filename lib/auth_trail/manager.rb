@@ -5,7 +5,7 @@ module AuthTrail
         request = ActionDispatch::Request.new(auth.env)
 
         AuthTrail.track(
-          activity_type: "sign_in",
+          activity_type: "sign_in_success",
           strategy: detect_strategy(auth),
           scope: opts[:scope].to_s,
           identity: AuthTrail.identity_method.call(request, opts, user),
@@ -19,7 +19,7 @@ module AuthTrail
         request = ActionDispatch::Request.new(env)
 
         AuthTrail.track(
-          activity_type: "sign_in",
+          activity_type: "sign_in_failure",
           strategy: detect_strategy(env["warden"]),
           scope: opts[:scope].to_s,
           identity: AuthTrail.identity_method.call(request, opts, nil),

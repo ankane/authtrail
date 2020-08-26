@@ -15,7 +15,7 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
 
     assert_equal 1, LoginActivity.count
     login_activity = LoginActivity.last
-    assert_equal "sign_in", login_activity.activity_type
+    assert_equal "sign_in_success", login_activity.activity_type
     assert_equal "user", login_activity.scope
     assert_equal "database_authenticatable", login_activity.strategy
     assert_equal "test@example.org", login_activity.identity
@@ -31,7 +31,7 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
 
     assert_equal 1, LoginActivity.count
     login_activity = LoginActivity.last
-    assert_equal "sign_in", login_activity.activity_type
+    assert_equal "sign_in_failure", login_activity.activity_type
     assert_equal "user", login_activity.scope
     assert_equal "database_authenticatable", login_activity.strategy
     assert_equal "test@example.org", login_activity.identity
