@@ -21,6 +21,10 @@ module AuthTrail
     end
   end
 
+  def self.ip_for(request)
+    request.remote_ip
+  end
+
   def self.track(strategy:, scope:, identity:, success:, request:, user: nil, failure_reason: nil)
     info = {
       strategy: strategy,
@@ -29,7 +33,7 @@ module AuthTrail
       success: success,
       failure_reason: failure_reason,
       user: user,
-      ip: request.remote_ip,
+      ip: self.ip_for(request),
       user_agent: request.user_agent,
       referrer: request.referrer
     }
