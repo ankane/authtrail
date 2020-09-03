@@ -40,7 +40,7 @@ module AuthTrail
 
     # add request info before exclude_method since exclude_method doesn't have access to request
     # could also add 2nd argument to exclude_method when arity > 1
-    AuthTrail.request_info_method.call(request, info) if AuthTrail.request_info_method
+    AuthTrail.request_info_method.call(info, request) if AuthTrail.request_info_method
 
     # if exclude_method throws an exception, default to not excluding
     exclude = AuthTrail.exclude_method && AuthTrail.safely(default: false) { AuthTrail.exclude_method.call(info) }

@@ -68,7 +68,7 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
   end
 
   def test_request_info_method
-    with_options(request_info_method: ->(request, info) { info[:request_id] = request.uuid }) do
+    with_options(request_info_method: ->(info, request) { info[:request_id] = request.uuid }) do
       post user_session_url, params: {user: {email: "exclude@example.org", password: "secret"}}
       assert LoginActivity.last.request_id
     end
@@ -76,7 +76,7 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
 
   def test_request_info_method_exclude
     options = {
-      request_info_method: ->(request, info) { info[:exclude] = true },
+      request_info_method: ->(info, request) { info[:exclude] = true },
       exclude_method: ->(info) { info[:exclude] }
     }
     with_options(**options) do
