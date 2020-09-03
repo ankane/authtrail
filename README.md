@@ -42,23 +42,23 @@ A `LoginActivity` record is created every time a user tries to login. You can th
 Exclude certain attempts from tracking - useful if you run acceptance tests
 
 ```ruby
-AuthTrail.exclude_method = lambda do |info|
-  info[:identity] == "capybara@example.org"
+AuthTrail.exclude_method = lambda do |data|
+  data[:identity] == "capybara@example.org"
 end
 ```
 
-Add or modify info (also add new fields to the `login_activities` table) [master]
+Add or modify data (also add new fields to the `login_activities` table) [master]
 
 ```ruby
-AuthTrail.request_info_method = lambda do |info, request|
-  info[:request_id] = request.request_id
+AuthTrail.request_info_method = lambda do |data, request|
+  data[:request_id] = request.request_id
 end
 ```
 
 Write data somewhere other than the `login_activities` table
 
 ```ruby
-AuthTrail.track_method = lambda do |info|
+AuthTrail.track_method = lambda do |data|
   # code
 end
 ```
