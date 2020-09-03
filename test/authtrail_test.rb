@@ -40,7 +40,7 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
   end
 
   def test_exclude_method
-    with_options(exclude_method: ->(info) { info[:identity] == "exclude@example.org" }) do
+    with_options(exclude_method: ->(data) { data[:identity] == "exclude@example.org" }) do
       post user_session_url, params: {user: {email: "exclude@example.org", password: "secret"}}
       assert_empty LoginActivity.all
 
@@ -51,7 +51,7 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
 
   # error reported to safely but doesn't bubble up and doesn't exclude
   def test_exclude_method_error
-    with_options(exclude_method: ->(info) { raise "Bad" }) do
+    with_options(exclude_method: ->(data) { raise "Bad" }) do
       assert_output(nil, "[authtrail] RuntimeError: Bad\n") do
         post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
       end
@@ -81,7 +81,7 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
   end
 
   def test_request_info_method
-    with_options(request_info_method: ->(info, request) { info[:request_id] = request.uuid }) do
+    with_options(request_info_method: ->(data, request) { data[:request_id] = request.uuid }) do
       post user_session_url, params: {user: {email: "exclude@example.org", password: "secret"}}
       assert LoginActivity.last.request_id
     end
@@ -89,8 +89,8 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
 
   def test_request_info_method_exclude
     options = {
-      request_info_method: ->(info, request) { info[:exclude] = true },
-      exclude_method: ->(info) { info[:exclude] }
+      request_info_method: ->(data, request) { data[:exclude] = true },
+      exclude_method: ->(data) { data[:exclude] }
     }
     with_options(**options) do
       post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}

@@ -22,7 +22,7 @@ module AuthTrail
   end
 
   def self.track(strategy:, scope:, identity:, success:, request:, user: nil, failure_reason: nil)
-    info = {
+    data = {
       strategy: strategy,
       scope: scope,
       identity: identity,
@@ -35,22 +35,22 @@ module AuthTrail
     }
 
     if request.params[:controller]
-      info[:context] = "#{request.params[:controller]}##{request.params[:action]}"
+      data[:context] = "#{request.params[:controller]}##{request.params[:action]}"
     end
 
-    # add request info before exclude_method since exclude_method doesn't have access to request
+    # add request data before exclude_method since exclude_method doesn't have access to request
     # could also add 2nd argument to exclude_method when arity > 1
-    AuthTrail.request_info_method.call(info, request) if AuthTrail.request_info_method
+    AuthTrail.request_info_method.call(data, request) if AuthTrail.request_info_method
 
     # if exclude_method throws an exception, default to not excluding
-    exclude = AuthTrail.exclude_method && AuthTrail.safely(default: false) { AuthTrail.exclude_method.call(info) }
+    exclude = AuthTrail.exclude_method && AuthTrail.safely(default: false) { AuthTrail.exclude_method.call(data) }
 
     unless exclude
       if AuthTrail.track_method
-        AuthTrail.track_method.call(info)
+        AuthTrail.track_method.call(data)
       else
         login_activity = LoginActivity.new
-        info.each do |k, v|
+        data.each do |k, v|
           login_activity.try("#{k}=", v)
         end
         login_activity.save!
