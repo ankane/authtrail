@@ -50,7 +50,7 @@ end
 Add or modify data (also add new fields to the `login_activities` table) [master]
 
 ```ruby
-AuthTrail.request_info_method = lambda do |data, request|
+AuthTrail.enrich_method = lambda do |data, request|
   data[:request_id] = request.request_id
 end
 ```
