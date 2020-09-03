@@ -52,7 +52,9 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
   # error reported to safely but doesn't bubble up and doesn't exclude
   def test_exclude_method_error
     with_options(exclude_method: ->(info) { raise "Bad" }) do
-      post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
+      assert_output(nil, "[authtrail] RuntimeError: Bad\n") do
+        post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
+      end
       assert_equal 1, LoginActivity.count
     end
   end
