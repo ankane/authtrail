@@ -43,6 +43,17 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     with_options(exclude_method: ->(info) { info[:identity] == "exclude@example.org" }) do
       post user_session_url, params: {user: {email: "exclude@example.org", password: "secret"}}
       assert_empty LoginActivity.all
+
+      post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
+      assert_equal 1, LoginActivity.count
+    end
+  end
+
+  # error reported to safely but doesn't bubble up and doesn't exclude
+  def test_exclude_method_error
+    with_options(exclude_method: ->(info) { raise "Bad" }) do
+      post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
+      assert_equal 1, LoginActivity.count
     end
   end
 
