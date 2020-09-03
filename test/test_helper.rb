@@ -25,10 +25,6 @@ Combustion.initialize! :active_record, :action_controller, :active_job do
   config.active_job.logger = logger
 end
 
-AuthTrail.exclude_method = lambda do |info|
-  info[:identity] == "exclude@example.org"
-end
-
 class Minitest::Test
   def with_options(options)
     previous_options = {}

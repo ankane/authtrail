@@ -1,3 +1,7 @@
+## 0.2.2 (unreleased)
+
+- Added `request_info_method` option
+
 ## 0.2.1 (2020-08-17)
 
 - Added `job_queue` option

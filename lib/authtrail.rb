@@ -9,7 +9,7 @@ require "auth_trail/version"
 
 module AuthTrail
   class << self
-    attr_accessor :exclude_method, :geocode, :track_method, :identity_method, :job_queue
+    attr_accessor :exclude_method, :geocode, :track_method, :identity_method, :job_queue, :request_info_method
   end
   self.geocode = true
   self.identity_method = lambda do |request, opts, user|
@@ -37,6 +37,10 @@ module AuthTrail
     if request.params[:controller]
       info[:context] = "#{request.params[:controller]}##{request.params[:action]}"
     end
+
+    # add request info before exclude_method since exclude_method doesn't have access to request
+    # could also add 2nd argument to exclude_method when arity > 1
+    AuthTrail.request_info_method.call(request, info) if AuthTrail.request_info_method
 
     # if exclude_method throws an exception, default to not excluding
     exclude = AuthTrail.exclude_method && AuthTrail.safely(default: false) { AuthTrail.exclude_method.call(info) }

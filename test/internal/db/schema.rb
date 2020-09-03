@@ -16,6 +16,9 @@ ActiveRecord::Schema.define do
     t.float :latitude
     t.float :longitude
     t.datetime :created_at
+
+    # app-specific fields
+    t.string :request_id
   end
 
   create_table :users do |t|

@@ -40,8 +40,10 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
   end
 
   def test_exclude_method
-    post user_session_url, params: {user: {email: "exclude@example.org", password: "secret"}}
-    assert_empty LoginActivity.all
+    with_options(exclude_method: ->(info) { info[:identity] == "exclude@example.org" }) do
+      post user_session_url, params: {user: {email: "exclude@example.org", password: "secret"}}
+      assert_empty LoginActivity.all
+    end
   end
 
   def test_geocode_true
@@ -62,6 +64,24 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
       assert_enqueued_with(job: AuthTrail::GeocodeJob, queue: "low_priority") do
         post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
       end
+    end
+  end
+
+  def test_request_info_method
+    with_options(request_info_method: ->(request, info) { info[:request_id] = request.uuid }) do
+      post user_session_url, params: {user: {email: "exclude@example.org", password: "secret"}}
+      assert LoginActivity.last.request_id
+    end
+  end
+
+  def test_request_info_method_exclude
+    options = {
+      request_info_method: ->(request, info) { info[:exclude] = true },
+      exclude_method: ->(info) { info[:exclude] }
+    }
+    with_options(**options) do
+      post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
+      assert_empty LoginActivity.all
     end
   end
 end

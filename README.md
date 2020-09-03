@@ -47,6 +47,14 @@ AuthTrail.exclude_method = lambda do |info|
 end
 ```
 
+Add or modify info (also add new fields to the `login_activities` table) [master]
+
+```ruby
+AuthTrail.request_info_method = lambda do |request, info|
+  info[:request_id] = request.request_id
+end
+```
+
 Write data somewhere other than the `login_activities` table
 
 ```ruby
