@@ -4,7 +4,7 @@ Track Devise login activity
 
 :tangerine: Battle-tested at [Instacart](https://www.instacart.com/opensource)
 
-[![Build Status](https://travis-ci.org/ankane/authtrail.svg?branch=master)](https://travis-ci.org/ankane/authtrail)
+[![Build Status](https://github.com/ankane/authtrail/workflows/build/badge.svg?branch=master)](https://github.com/ankane/authtrail/actions)
 
 ## Installation
 
