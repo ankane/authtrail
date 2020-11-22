@@ -55,6 +55,14 @@ AuthTrail.transform_method = lambda do |data, request|
 end
 ```
 
+Store the user on failed attempts [master]
+
+```ruby
+AuthTrail.transform_method = lambda do |data, request|
+  data[:user] ||= User.find_by(email: data[:identity])
+end
+```
+
 Write data somewhere other than the `login_activities` table
 
 ```ruby
