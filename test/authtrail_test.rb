@@ -80,16 +80,16 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     end
   end
 
-  def test_enrich_method
-    with_options(enrich_method: ->(data, request) { data[:request_id] = request.uuid }) do
+  def test_transform_method
+    with_options(transform_method: ->(data, request) { data[:request_id] = request.uuid }) do
       post user_session_url, params: {user: {email: "exclude@example.org", password: "secret"}}
       assert LoginActivity.last.request_id
     end
   end
 
-  def test_enrich_method_exclude
+  def test_transform_method_exclude
     options = {
-      enrich_method: ->(data, request) { data[:exclude] = true },
+      transform_method: ->(data, request) { data[:exclude] = true },
       exclude_method: ->(data) { data[:exclude] }
     }
     with_options(**options) do
