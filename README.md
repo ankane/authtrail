@@ -47,7 +47,7 @@ AuthTrail.exclude_method = lambda do |data|
 end
 ```
 
-Add or modify data (also add new fields to the `login_activities` table)
+Add or modify data - also add new fields to the `login_activities` table if needed
 
 ```ruby
 AuthTrail.transform_method = lambda do |data, request|
