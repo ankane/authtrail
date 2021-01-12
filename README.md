@@ -95,35 +95,57 @@ The `LoginActivity` model uses a [polymorphic association](https://guides.rubyon
 
 ## Geocoding
 
-IP geocoding is performed in a background job so it doesn’t slow down web requests. You can disable it entirely with:
+To enable geocoding, add this line to your application’s Gemfile:
 
 ```ruby
-AuthTrail.geocode = false
+gem 'geocoder'
 ```
 
-Set job queue for geocoding
+And create an initializer with:
+
+```ruby
+AuthTrail.geocode = true
+```
+
+Geocoding is performed in a background job so it doesn’t slow down web requests. Set the job queue with:
 
 ```ruby
 AuthTrail.job_queue = :low_priority
 ```
 
-### Geocoding Performance
+### Local Geocoding
 
-To avoid calls to a remote API, download the [GeoLite2 City database](https://dev.maxmind.com/geoip/geoip2/geolite2/) and configure Geocoder to use it.
-
-Add this line to your application’s Gemfile:
+For privacy and performance, we recommend geocoding locally. Add this line to your application’s Gemfile:
 
 ```ruby
 gem 'maxminddb'
 ```
 
-And create an initializer at `config/initializers/geocoder.rb` with:
+For city-level geocoding, download the [GeoLite2 City database](https://dev.maxmind.com/geoip/geoip2/geolite2/) and create `config/initializers/geocoder.rb` with:
 
 ```ruby
 Geocoder.configure(
   ip_lookup: :geoip2,
   geoip2: {
-    file: Rails.root.join("lib", "GeoLite2-City.mmdb")
+    file: "path/to/GeoLite2-City.mmdb"
+  }
+)
+```
+
+For country-level geocoding, install the `geoip-database` package. It’s preinstalled on Heroku. For Ubuntu, use:
+
+```sh
+sudo apt-get install geoip-database
+```
+
+And create `config/initializers/geocoder.rb` with:
+
+```ruby
+Geocoder.configure(
+  ip_lookup: :maxmind_local,
+  maxmind_local: {
+    file: "/usr/share/GeoIP/GeoIP.dat",
+    package: :country
   }
 )
 ```
@@ -146,6 +168,10 @@ We recommend using this in addition to Devise’s `Lockable` module and [Rack::A
 Check out [Hardening Devise](https://ankane.org/hardening-devise) and [Secure Rails](https://github.com/ankane/secure_rails) for more best practices.
 
 ## Upgrading
+
+### 0.3.0
+
+Geocoding is no longer enabled by default. Follow [these instructions](#geocoding) to enable it.
 
 ### 0.2.0
 

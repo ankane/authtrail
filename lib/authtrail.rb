@@ -1,5 +1,4 @@
 # dependencies
-require "geocoder"
 require "warden"
 
 # modules

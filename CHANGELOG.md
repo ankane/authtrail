@@ -1,3 +1,8 @@
+## 0.3.0 (unreleased)
+
+- Geocoding is no longer enabled by default
+- Removed support for Rails < 5.2
+
 ## 0.2.2 (2020-11-21)
 
 - Added `transform_method` option
