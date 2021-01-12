@@ -140,6 +140,27 @@ Check out [Hardening Devise](https://ankane.org/hardening-devise) and [Secure Ra
 
 ## Upgrading
 
+### 0.3.0
+
+Create a migration with:
+
+```ruby
+add_column :login_activities, :activity_type, :string
+```
+
+Then either:
+
+1. Rename the table `rename_table :login_activities, :authtrail_activities`
+2. Create an initializer with `AuthTrail::Activity.table_name = "login_activities"`
+
+Then add `:trailable` to your Devise models:
+
+```ruby
+class User < ApplicationRecord
+  devise :trailable
+end
+```
+
 ### 0.2.0
 
 To store latitude and longitude, create a migration with:
