@@ -1,9 +1,9 @@
 module AuthTrail
   class GeocodeJob < ActiveJob::Base
-    def perform(login_activity)
+    def perform(activity)
       result =
         begin
-          Geocoder.search(login_activity.ip).first
+          Geocoder.search(activity.ip).first
         rescue => e
           Rails.logger.info "Geocode failed: #{e.message}"
           nil
@@ -18,9 +18,9 @@ module AuthTrail
           longitude: result.try(:longitude)
         }
         attributes.each do |k, v|
-          login_activity.try("#{k}=", v.presence)
+          activity.try("#{k}=", v.presence)
         end
-        login_activity.save!
+        activity.save!
       end
     end
   end
