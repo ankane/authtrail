@@ -5,7 +5,6 @@ class <%= migration_class_name %> < ActiveRecord::Migration<%= migration_version
       t.string :scope
       t.string :strategy
       t.string :identity
-      t.boolean :success
       t.string :failure_reason
       t.references :user, polymorphic: true
       t.string :context
