@@ -140,7 +140,7 @@ Check out [Hardening Devise](https://ankane.org/hardening-devise) and [Secure Ra
 
 ## Upgrading
 
-### 0.3.0
+### 1.0.0
 
 Create a migration with:
 
@@ -148,10 +148,17 @@ Create a migration with:
 add_column :login_activities, :activity_type, :string
 ```
 
-Then either:
+Rename `app/models/login_activity.rb` to `app/models/auth_trail/activity.rb` and replace its contents with:
 
-1. Rename the table `rename_table :login_activities, :authtrail_activities`
-2. Create an initializer with `AuthTrail::Activity.table_name = "login_activities"`
+```ruby
+module AuthTrail
+  class Activity < ActiveRecord::Base
+    self.table_name = "login_activities"
+
+    belongs_to :user, polymorphic: true, optional: true
+  end
+end
+```
 
 Then add `:trailable` to your Devise models:
 
