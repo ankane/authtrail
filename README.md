@@ -139,6 +139,24 @@ class LoginActivity < ApplicationRecord
 end
 ```
 
+You will also need to update the generated migration file for each field you encrypt and use blind index on.
+
+Remove the lines:
+
+```ruby
+t.string :identity
+t.string :ip
+```
+
+Replace them with:
+
+```ruby
+t.string :identity_ciphertext
+t.string :identity_bidx, index: true
+t.string :ip_ciphertext
+t.string :ip_bidx, index: true
+```
+
 ## Other Notes
 
 We recommend using this in addition to Devise’s `Lockable` module and [Rack::Attack](https://github.com/kickstarter/rack-attack).
