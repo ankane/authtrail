@@ -61,7 +61,6 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
 
   def test_track_method_error
     with_options(track_method: ->(data) { raise "Bad" }) do
-      user = User.create!(email: "test@example.org", password: "secret")
       error = assert_raises do
         post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
       end
