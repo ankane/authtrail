@@ -1,4 +1,4 @@
-## 0.3.0 (unreleased)
+## 0.3.0 (2021-03-01)
 
 - Disabled geocoding by default for new installations
 - Raise an exception instead of logging when auditing fails
