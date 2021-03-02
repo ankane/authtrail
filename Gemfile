@@ -2,5 +2,9 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "railties", "~> 6.1.0"
-gem "activerecord", "~> 6.1.0"
+gem "rake"
+gem "minitest", ">= 5"
+gem "combustion"
+gem "rails", "~> 6.1.0"
+gem "sqlite3"
+gem "devise"

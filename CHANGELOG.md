@@ -1,6 +1,7 @@
 ## 0.3.0 (unreleased)
 
 - Disabled geocoding by default for new installations
+- Removed support for Rails < 5.2 and Ruby < 2.6
 
 ## 0.2.2 (2020-11-21)
 
