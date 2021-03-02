@@ -95,35 +95,53 @@ The `LoginActivity` model uses a [polymorphic association](https://guides.rubyon
 
 ## Geocoding
 
-IP geocoding is performed in a background job so it doesn’t slow down web requests. You can disable it entirely with:
+AuthTrail uses [Geocoder](https://github.com/alexreisner/geocoder) for geocoding. We recommend configuring [local geocoding](#local-geocoding) so IP addresses are not sent to a 3rd party service. If you do use a 3rd party service and adhere to GDPR, be sure to add it to your subprocessor list.
+
+To enable geocoding, update `config/initializers/authtrail.rb`:
 
 ```ruby
-AuthTrail.geocode = false
+AuthTrail.geocode = true
 ```
 
-Set job queue for geocoding
+Geocoding is performed in a background job so it doesn’t slow down web requests. Set the job queue with:
 
 ```ruby
 AuthTrail.job_queue = :low_priority
 ```
 
-### Geocoding Performance
+### Local Geocoding
 
-To avoid calls to a remote API, download the [GeoLite2 City database](https://dev.maxmind.com/geoip/geoip2/geolite2/) and configure Geocoder to use it.
-
-Add this line to your application’s Gemfile:
+For privacy and performance, we recommend geocoding locally. Add this line to your application’s Gemfile:
 
 ```ruby
 gem 'maxminddb'
 ```
 
-And create an initializer at `config/initializers/geocoder.rb` with:
+For city-level geocoding, download the [GeoLite2 City database](https://dev.maxmind.com/geoip/geoip2/geolite2/) and create `config/initializers/geocoder.rb` with:
 
 ```ruby
 Geocoder.configure(
   ip_lookup: :geoip2,
   geoip2: {
-    file: Rails.root.join("lib", "GeoLite2-City.mmdb")
+    file: "path/to/GeoLite2-City.mmdb"
+  }
+)
+```
+
+For country-level geocoding, install the `geoip-database` package. It’s preinstalled on Heroku. For Ubuntu, use:
+
+```sh
+sudo apt-get install geoip-database
+```
+
+And create `config/initializers/geocoder.rb` with:
+
+```ruby
+Geocoder.configure(
+  ip_lookup: :maxmind_local,
+  maxmind_local: {
+    file: "/usr/share/GeoIP/GeoIP.dat",
+    package: :country
   }
 )
 ```

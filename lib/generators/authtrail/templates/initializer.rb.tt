@@ -1,0 +1,4 @@
+# set to true for geocoding
+# we recommend configuring local geocoding first
+# see https://github.com/ankane/authtrail#geocoding
+AuthTrail.geocode = false

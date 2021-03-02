@@ -1,3 +1,7 @@
+## 0.3.0 (unreleased)
+
+- Disabled geocoding by default for new installations
+
 ## 0.2.2 (2020-11-21)
 
 - Added `transform_method` option
