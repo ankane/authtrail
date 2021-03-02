@@ -59,6 +59,16 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     end
   end
 
+  def test_track_method_error
+    with_options(track_method: ->(data) { raise "Bad" }) do
+      user = User.create!(email: "test@example.org", password: "secret")
+      error = assert_raises do
+        post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
+      end
+      assert_equal "Bad", error.message
+    end
+  end
+
   def test_geocode_true
     assert_enqueued_with(job: AuthTrail::GeocodeJob, queue: "default") do
       post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
@@ -95,6 +105,15 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     with_options(**options) do
       post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
       assert_empty LoginActivity.all
+    end
+  end
+
+  def test_transform_method_error
+    with_options(transform_method: ->(data, request) { raise "Bad" }) do
+      error = assert_raises do
+        post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
+      end
+      assert_equal "Bad", error.message
     end
   end
 end

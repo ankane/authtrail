@@ -2,34 +2,29 @@ module AuthTrail
   module Manager
     class << self
       def after_set_user(user, auth, opts)
-        # do not raise an exception for tracking
-        AuthTrail.safely do
-          request = ActionDispatch::Request.new(auth.env)
+        request = ActionDispatch::Request.new(auth.env)
 
-          AuthTrail.track(
-            strategy: detect_strategy(auth),
-            scope: opts[:scope].to_s,
-            identity: AuthTrail.identity_method.call(request, opts, user),
-            success: true,
-            request: request,
-            user: user
-          )
-        end
+        AuthTrail.track(
+          strategy: detect_strategy(auth),
+          scope: opts[:scope].to_s,
+          identity: AuthTrail.identity_method.call(request, opts, user),
+          success: true,
+          request: request,
+          user: user
+        )
       end
 
       def before_failure(env, opts)
-        AuthTrail.safely do
-          request = ActionDispatch::Request.new(env)
+        request = ActionDispatch::Request.new(env)
 
-          AuthTrail.track(
-            strategy: detect_strategy(env["warden"]),
-            scope: opts[:scope].to_s,
-            identity: AuthTrail.identity_method.call(request, opts, nil),
-            success: false,
-            request: request,
-            failure_reason: opts[:message].to_s
-          )
-        end
+        AuthTrail.track(
+          strategy: detect_strategy(env["warden"]),
+          scope: opts[:scope].to_s,
+          identity: AuthTrail.identity_method.call(request, opts, nil),
+          success: false,
+          request: request,
+          failure_reason: opts[:message].to_s
+        )
       end
 
       private
