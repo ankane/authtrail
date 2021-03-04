@@ -1,4 +1,4 @@
-## 0.3.1 (unreleased)
+## 0.3.1 (2021-03-03)
 
 - Added `--lockbox` option to install generator
 
