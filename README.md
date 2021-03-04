@@ -95,7 +95,7 @@ The `LoginActivity` model uses a [polymorphic association](https://guides.rubyon
 
 ## Geocoding
 
-AuthTrail uses [Geocoder](https://github.com/alexreisner/geocoder) for geocoding. We recommend configuring [local geocoding](#local-geocoding) and [load balancer geocoding](#load-balancer-geocoding) so IP addresses are not sent to a 3rd party service. If you do use a 3rd party service and adhere to GDPR, be sure to add it to your subprocessor list.
+AuthTrail uses [Geocoder](https://github.com/alexreisner/geocoder) for geocoding. We recommend configuring [local geocoding](#local-geocoding) or [load balancer geocoding](#load-balancer-geocoding) so IP addresses are not sent to a 3rd party service. If you do use a 3rd party service and adhere to GDPR, be sure to add it to your subprocessor list.
 
 To enable geocoding, update `config/initializers/authtrail.rb`:
 
