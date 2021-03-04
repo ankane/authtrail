@@ -1,3 +1,7 @@
+## 0.3.1 (unreleased)
+
+- Added `--lockbox` option to install generator
+
 ## 0.3.0 (2021-03-01)
 
 - Disabled geocoding by default for new installations

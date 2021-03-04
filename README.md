@@ -14,7 +14,14 @@ Add this line to your application’s Gemfile:
 gem 'authtrail'
 ```
 
-And run:
+To encrypt email and IP addresses, install [Lockbox](https://github.com/ankane/lockbox) and [Blind Index](https://github.com/ankane/blind_index) and run:
+
+```sh
+rails generate authtrail:install --lockbox
+rails db:migrate
+```
+
+If you prefer not to encrypt data, run:
 
 ```sh
 rails generate authtrail:install
@@ -164,17 +171,6 @@ end
 ```
 
 Check out [this example](https://github.com/ankane/authtrail/issues/40)
-
-## Data Protection
-
-Protect the privacy of your users by encrypting fields that contain personal data, such as `identity` and `ip`. [Lockbox](https://github.com/ankane/lockbox) is great for this. Use [Blind Index](https://github.com/ankane/blind_index) so you can still query the fields.
-
-```ruby
-class LoginActivity < ApplicationRecord
-  encrypts :identity, :ip
-  blind_index :identity, :ip
-end
-```
 
 ## Other Notes
 
