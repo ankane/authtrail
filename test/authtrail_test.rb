@@ -69,8 +69,10 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
   end
 
   def test_geocode_true
-    assert_enqueued_with(job: AuthTrail::GeocodeJob, queue: "default") do
-      post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
+    with_options(geocode: true) do
+      assert_enqueued_with(job: AuthTrail::GeocodeJob, queue: "default") do
+        post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
+      end
     end
   end
 
@@ -81,8 +83,13 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     end
   end
 
+  def test_geocode_default
+    post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
+    assert_equal 0, enqueued_jobs.size
+  end
+
   def test_job_queue
-    with_options(job_queue: :low_priority) do
+    with_options(geocode: true, job_queue: :low_priority) do
       assert_enqueued_with(job: AuthTrail::GeocodeJob, queue: "low_priority") do
         post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
       end

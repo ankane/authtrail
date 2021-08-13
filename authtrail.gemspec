@@ -18,5 +18,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency "railties", ">= 5.2"
   spec.add_dependency "activerecord", ">= 5.2"
   spec.add_dependency "warden"
-  spec.add_dependency "geocoder"
 end

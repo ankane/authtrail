@@ -1,3 +1,8 @@
+## 0.4.0 (unreleased)
+
+- Disabled geocoding by default
+- Made the `geocoder` gem an optional dependency
+
 ## 0.3.1 (2021-03-03)
 
 - Added `--lockbox` option to install generator

@@ -1,5 +1,4 @@
 # dependencies
-require "geocoder"
 require "warden"
 
 # modules
@@ -11,7 +10,7 @@ module AuthTrail
   class << self
     attr_accessor :exclude_method, :geocode, :track_method, :identity_method, :job_queue, :transform_method
   end
-  self.geocode = true
+  self.geocode = false
   self.identity_method = lambda do |request, opts, user|
     if user
       user.try(:email)
