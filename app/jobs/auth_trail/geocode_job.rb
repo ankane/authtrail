@@ -21,6 +21,7 @@ module AuthTrail
           city: result.try(:city),
           region: result.try(:state),
           country: result.try(:country),
+          country_code: result.try(:country_code),
           latitude: result.try(:latitude),
           longitude: result.try(:longitude)
         }

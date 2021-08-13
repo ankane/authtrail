@@ -2,6 +2,7 @@
 
 - Disabled geocoding by default
 - Made the `geocoder` gem an optional dependency
+- Added `country_code` to geocoding
 
 ## 0.3.1 (2021-03-03)
 
