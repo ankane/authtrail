@@ -2,6 +2,8 @@
 
 Track Devise login activity
 
+**AuthTrail 0.4.0 was recently released** - see [how to upgrade](#upgrading)
+
 :tangerine: Battle-tested at [Instacart](https://www.instacart.com/opensource)
 
 [![Build Status](https://github.com/ankane/authtrail/workflows/build/badge.svg?branch=master)](https://github.com/ankane/authtrail/actions)
@@ -27,6 +29,8 @@ If you prefer not to encrypt data, run:
 rails generate authtrail:install
 rails db:migrate
 ```
+
+To enable geocoding, see the [Geocoding section](#geocoding).
 
 ## How It Works
 
@@ -104,7 +108,13 @@ The `LoginActivity` model uses a [polymorphic association](https://guides.rubyon
 
 AuthTrail uses [Geocoder](https://github.com/alexreisner/geocoder) for geocoding. We recommend configuring [local geocoding](#local-geocoding) or [load balancer geocoding](#load-balancer-geocoding) so IP addresses are not sent to a 3rd party service. If you do use a 3rd party service and adhere to GDPR, be sure to add it to your subprocessor list.
 
-To enable geocoding, update `config/initializers/authtrail.rb`:
+To enable geocoding, add this line to your application’s Gemfile:
+
+```ruby
+gem 'geocoder'
+```
+
+And update `config/initializers/authtrail.rb`:
 
 ```ruby
 AuthTrail.geocode = true
@@ -179,6 +189,18 @@ We recommend using this in addition to Devise’s `Lockable` module and [Rack::A
 Check out [Hardening Devise](https://ankane.org/hardening-devise) and [Secure Rails](https://github.com/ankane/secure_rails) for more best practices.
 
 ## Upgrading
+
+### 0.4.0
+
+There are two notable changes to geocoding:
+
+1. Geocoding is now disabled by default (this was already the case for new installations with 0.3.0+). Check out the instructions for [how to enable it](#geocoding) (you may need to create `config/initializers/authtrail.rb`).
+
+2. The `geocoder` gem is now an optional dependency. To use geocoding, add it to your Gemfile:
+
+  ```ruby
+  gem 'geocoder'
+  ```
 
 ### 0.2.0
 
