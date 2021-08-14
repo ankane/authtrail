@@ -173,6 +173,7 @@ Some load balancers can add geocoding information to request headers.
 
 ```ruby
 AuthTrail.geocode = false
+
 AuthTrail.transform_method = lambda do |data, request|
   data[:country] = request.headers["<country-header>"]
   data[:region] = request.headers["<region-header>"]
