@@ -4,7 +4,7 @@
 
 ## 0.4.0 (2021-08-13)
 
-- Disabled geocoding by default
+- Disabled geocoding by default (this was already the case for new installations with 0.3.0+)
 - Made the `geocoder` gem an optional dependency
 - Added `country_code` to geocoding
 
