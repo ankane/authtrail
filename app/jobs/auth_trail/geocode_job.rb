@@ -9,8 +9,7 @@ module AuthTrail
         begin
           Geocoder.search(login_activity.ip).first
         rescue NameError
-          # geocoder gem not installed
-          raise
+          raise "Add the geocoder gem to your Gemfile to use geocoding"
         rescue => e
           Rails.logger.info "Geocode failed: #{e.message}"
           nil

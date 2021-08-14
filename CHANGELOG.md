@@ -1,3 +1,7 @@
+## 0.4.1 (unreleased)
+
+- Improved error message when `geocoder` gem not installed
+
 ## 0.4.0 (2021-08-13)
 
 - Disabled geocoding by default
