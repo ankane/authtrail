@@ -1,4 +1,4 @@
-## 0.4.1 (unreleased)
+## 0.4.1 (2021-08-14)
 
 - Improved error message when `geocoder` gem not installed
 
