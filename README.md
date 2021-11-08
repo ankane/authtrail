@@ -183,6 +183,20 @@ end
 
 Check out [this example](https://github.com/ankane/authtrail/issues/40)
 
+## Data Retention
+
+Delete older data with:
+
+```ruby
+LoginActivity.where("created_at < ?", 2.years.ago).in_batches.delete_all
+```
+
+Delete data for a specific user with:
+
+```ruby
+LoginActivity.where(user_id: 1, user_type: "User").in_batches.delete_all
+```
+
 ## Other Notes
 
 We recommend using this in addition to Devise’s `Lockable` module and [Rack::Attack](https://github.com/kickstarter/rack-attack).
