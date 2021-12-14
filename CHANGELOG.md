@@ -1,3 +1,7 @@
+## 0.4.2 (unreleased)
+
+- Fixed error with Rails 7 rc1
+
 ## 0.4.1 (2021-08-14)
 
 - Improved error message when `geocoder` gem not installed

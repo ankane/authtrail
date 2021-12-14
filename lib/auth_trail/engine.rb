@@ -1,3 +1,4 @@
+require "active_support"
 require "rails/engine"
 
 module AuthTrail
