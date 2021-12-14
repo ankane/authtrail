@@ -19,7 +19,7 @@ gem 'authtrail'
 To encrypt email and IP addresses with Lockbox, install [Lockbox](https://github.com/ankane/lockbox) and [Blind Index](https://github.com/ankane/blind_index) and run:
 
 ```sh
-rails generate authtrail:install --lockbox
+rails generate authtrail:install --encryption=lockbox
 rails db:migrate
 ```
 
@@ -33,7 +33,7 @@ rails db:migrate
 If you prefer not to encrypt data, run:
 
 ```sh
-rails generate authtrail:install
+rails generate authtrail:install --encryption=none
 rails db:migrate
 ```
 
