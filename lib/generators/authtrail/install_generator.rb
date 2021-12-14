@@ -6,9 +6,12 @@ module Authtrail
       include ActiveRecord::Generators::Migration
       source_root File.join(__dir__, "templates")
 
+      class_option :encryption, type: :string
+      # deprecated
       class_option :lockbox, type: :boolean
 
       def copy_migration
+        encryption # ensure valid
         migration_template "login_activities_migration.rb", "db/migrate/create_login_activities.rb", migration_version: migration_version
       end
 
@@ -17,10 +20,13 @@ module Authtrail
       end
 
       def generate_model
-        if lockbox?
+        case encryption
+        when "lockbox"
           template "model_lockbox.rb", "app/models/login_activity.rb"
+        when "activerecord"
+          template "model_activerecord.rb", "app/models/login_activity.rb"
         else
-          template "model.rb", "app/models/login_activity.rb"
+          template "model_none.rb", "app/models/login_activity.rb"
         end
       end
 
@@ -29,23 +35,40 @@ module Authtrail
       end
 
       def identity_column
-        if lockbox?
+        case encryption
+        when "lockbox"
           "t.text :identity_ciphertext\n      t.string :identity_bidx, index: true"
         else
+          # TODO add limit: 510 for Active Record encryption + MySQL?
           "t.string :identity, index: true"
         end
       end
 
       def ip_column
-        if lockbox?
+        case encryption
+        when "lockbox"
           "t.text :ip_ciphertext\n      t.string :ip_bidx, index: true"
         else
+          # TODO add limit: 510 for Active Record encryption + MySQL?
           "t.string :ip, index: true"
         end
       end
 
-      def lockbox?
-        options[:lockbox]
+      # TODO remove default
+      def encryption
+        case options[:encryption]
+        when "lockbox", "activerecord", "none"
+          options[:encryption]
+        when nil
+          if options[:lockbox]
+            # TODO deprecation warning
+            "lockbox"
+          else
+            "none"
+          end
+        else
+          abort "Error: encryption must be lockbox, activerecord, or none"
+        end
       end
     end
   end

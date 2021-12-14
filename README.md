@@ -16,10 +16,17 @@ Add this line to your application’s Gemfile:
 gem 'authtrail'
 ```
 
-To encrypt email and IP addresses, install [Lockbox](https://github.com/ankane/lockbox) and [Blind Index](https://github.com/ankane/blind_index) and run:
+To encrypt email and IP addresses with Lockbox, install [Lockbox](https://github.com/ankane/lockbox) and [Blind Index](https://github.com/ankane/blind_index) and run:
 
 ```sh
 rails generate authtrail:install --lockbox
+rails db:migrate
+```
+
+To use Active Record encryption (Rails 7+, experimental, unreleased), run:
+
+```sh
+rails generate authtrail:install --encryption=activerecord
 rails db:migrate
 ```
 

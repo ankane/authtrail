@@ -1,5 +1,6 @@
 ## 0.4.2 (unreleased)
 
+- Added experimental support for Active Record encryption
 - Fixed error with Rails 7 rc1
 
 ## 0.4.1 (2021-08-14)
