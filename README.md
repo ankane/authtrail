@@ -2,8 +2,6 @@
 
 Track Devise login activity
 
-**AuthTrail 0.4.0 was recently released** - see [how to upgrade](#upgrading)
-
 :tangerine: Battle-tested at [Instacart](https://www.instacart.com/opensource)
 
 [![Build Status](https://github.com/ankane/authtrail/workflows/build/badge.svg?branch=master)](https://github.com/ankane/authtrail/actions)
