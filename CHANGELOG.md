@@ -1,4 +1,4 @@
-## 0.4.3 (unreleased)
+## 0.4.3 (2022-06-12)
 
 - Updated install generator for Lockbox 1.0
 
