@@ -13,7 +13,7 @@ Track Devise login activity
 Add this line to your application’s Gemfile:
 
 ```ruby
-gem 'authtrail'
+gem "authtrail"
 ```
 
 To encrypt email and IP addresses with Lockbox, install [Lockbox](https://github.com/ankane/lockbox) and [Blind Index](https://github.com/ankane/blind_index) and run:
@@ -118,7 +118,7 @@ AuthTrail uses [Geocoder](https://github.com/alexreisner/geocoder) for geocoding
 To enable geocoding, add this line to your application’s Gemfile:
 
 ```ruby
-gem 'geocoder'
+gem "geocoder"
 ```
 
 And update `config/initializers/authtrail.rb`:
@@ -138,7 +138,7 @@ AuthTrail.job_queue = :low_priority
 For privacy and performance, we recommend geocoding locally. Add this line to your application’s Gemfile:
 
 ```ruby
-gem 'maxminddb'
+gem "maxminddb"
 ```
 
 For city-level geocoding, download the [GeoLite2 City database](https://dev.maxmind.com/geoip/geoip2/geolite2/) and create `config/initializers/geocoder.rb` with:
@@ -221,7 +221,7 @@ There are two notable changes to geocoding:
 2. The `geocoder` gem is now an optional dependency. To use geocoding, add it to your Gemfile:
 
   ```ruby
-  gem 'geocoder'
+  gem "geocoder"
   ```
 
 ### 0.2.0
