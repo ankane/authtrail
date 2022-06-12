@@ -1,7 +1,7 @@
 class LoginActivity < ApplicationRecord
   belongs_to :user, polymorphic: true, optional: true
 
-  encrypts :identity, :ip
+  has_encrypted :identity, :ip
   blind_index :identity, :ip
 
   before_save :reduce_precision

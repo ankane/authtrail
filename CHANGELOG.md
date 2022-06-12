@@ -1,3 +1,7 @@
+## 0.4.3 (unreleased)
+
+- Updated install generator for Lockbox 1.0
+
 ## 0.4.2 (2021-12-13)
 
 - Added experimental support for Active Record encryption
