@@ -15,6 +15,8 @@ ActiveRecord::Schema.define do
     t.string :country
     t.float :latitude
     t.float :longitude
+    t.string :browser
+    t.string :platform
     t.datetime :created_at
 
     # app-specific fields

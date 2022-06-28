@@ -8,9 +8,11 @@ require "auth_trail/version"
 
 module AuthTrail
   class << self
-    attr_accessor :exclude_method, :geocode, :track_method, :identity_method, :job_queue, :transform_method
+    attr_accessor :exclude_method, :geocode, :track_method, :identity_method,
+      :job_queue, :transform_method, :browser_info
   end
   self.geocode = false
+  self.browser_info = false
   self.identity_method = lambda do |request, opts, user|
     if user
       user.try(:email)
@@ -32,6 +34,14 @@ module AuthTrail
       user_agent: request.user_agent,
       referrer: request.referrer
     }
+
+    if AuthTrail.browser_info
+      browser = Browser.new(request.user_agent)
+      data.merge!(
+        browser: browser.name,
+        platform: browser.platform.name
+      )
+    end
 
     if request.params[:controller]
       data[:context] = "#{request.params[:controller]}##{request.params[:action]}"

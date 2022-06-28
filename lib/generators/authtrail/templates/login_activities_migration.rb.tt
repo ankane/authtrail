@@ -16,6 +16,8 @@ class <%= migration_class_name %> < ActiveRecord::Migration<%= migration_version
       t.string :country
       t.float :latitude
       t.float :longitude
+      t.string :browser
+      t.string :platform
       t.datetime :created_at
     end
   end

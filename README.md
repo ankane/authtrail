@@ -51,6 +51,7 @@ A `LoginActivity` record is created every time a user tries to login. You can th
 - `ip` - IP address
 - `user_agent` and `referrer` - from browser
 - `city`, `region`, `country`, `latitude`, and `longitude` - from IP
+- `browser` and `platform` - from `user_agent` parsing
 - `created_at` - time of event
 
 ## Features
@@ -187,6 +188,23 @@ end
 ```
 
 Check out [this example](https://github.com/ankane/authtrail/issues/40)
+
+## Browser Info
+
+AuthTrail uses [Browser](https://github.com/fnando/browser) for parsing
+information about the browser from the User-Agent.
+
+To enable browser info, add this line to your application’s Gemfile:
+
+```ruby
+gem "browser"
+```
+
+And update `config/initializers/authtrail.rb`:
+
+```ruby
+AuthTrail.browser_info = true
+```
 
 ## Data Retention
 
