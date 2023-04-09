@@ -133,13 +133,17 @@ AuthTrail.job_queue = :low_priority
 
 ### Local Geocoding
 
-For privacy and performance, we recommend geocoding locally. Add this line to your application’s Gemfile:
+For privacy and performance, we recommend geocoding locally.
+
+For city-level geocoding, download the [GeoLite2 City database](https://dev.maxmind.com/geoip/geoip2/geolite2/).
+
+Add this line to your application’s Gemfile:
 
 ```ruby
 gem "maxminddb"
 ```
 
-For city-level geocoding, download the [GeoLite2 City database](https://dev.maxmind.com/geoip/geoip2/geolite2/) and create `config/initializers/geocoder.rb` with:
+And create `config/initializers/geocoder.rb` with:
 
 ```ruby
 Geocoder.configure(
@@ -154,6 +158,12 @@ For country-level geocoding, install the `geoip-database` package. It’s preins
 
 ```sh
 sudo apt-get install geoip-database
+```
+
+Add this line to your application’s Gemfile:
+
+```ruby
+gem "geoip"
 ```
 
 And create `config/initializers/geocoder.rb` with:
