@@ -2,9 +2,9 @@
 require "warden"
 
 # modules
-require "auth_trail/engine"
-require "auth_trail/manager"
-require "auth_trail/version"
+require_relative "auth_trail/engine"
+require_relative "auth_trail/manager"
+require_relative "auth_trail/version"
 
 module AuthTrail
   class << self
