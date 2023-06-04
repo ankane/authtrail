@@ -1,7 +1,7 @@
 ## 0.5.0 (unreleased)
 
 - Made Active Job optional
-- Dropped support for Ruby < 3 and Rails < 6.1
+- Removed support for Rails < 6.1 and Ruby < 3
 
 ## 0.4.3 (2022-06-12)
 
