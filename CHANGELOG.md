@@ -1,3 +1,7 @@
+## 0.5.0 (unreleased)
+
+- Dropped support for Ruby < 3 and Rails < 6.1
+
 ## 0.4.3 (2022-06-12)
 
 - Updated install generator for Lockbox 1.0
