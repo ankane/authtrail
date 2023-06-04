@@ -2,11 +2,12 @@
 require "warden"
 
 # modules
-require_relative "auth_trail/engine"
 require_relative "auth_trail/manager"
 require_relative "auth_trail/version"
 
 module AuthTrail
+  autoload :GeocodeJob, "auth_trail/geocode_job"
+
   class << self
     attr_accessor :exclude_method, :geocode, :track_method, :identity_method, :job_queue, :transform_method
   end
