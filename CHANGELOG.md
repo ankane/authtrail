@@ -1,4 +1,4 @@
-## 0.5.0 (unreleased)
+## 0.5.0 (2023-07-02)
 
 - Made Active Record and Active Job optional
 - Removed support for Rails < 6.1 and Ruby < 3
