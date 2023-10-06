@@ -8,4 +8,4 @@
 /tmp/
 *.lock
 *.log
-*.sqlite
+*.sqlite*
