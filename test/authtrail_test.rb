@@ -1,8 +1,6 @@
 require_relative "test_helper"
 
 class AuthTrailTest < ActionDispatch::IntegrationTest
-  include ActiveJob::TestHelper # for Rails < 6
-
   def setup
     User.delete_all
     LoginActivity.delete_all
