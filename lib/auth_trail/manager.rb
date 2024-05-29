@@ -4,27 +4,31 @@ module AuthTrail
       def after_set_user(user, auth, opts)
         request = ActionDispatch::Request.new(auth.env)
 
-        AuthTrail.track(
-          strategy: detect_strategy(auth),
-          scope: opts[:scope].to_s,
-          identity: AuthTrail.identity_method.call(request, opts, user),
-          success: true,
-          request: request,
-          user: user
-        )
+        ActiveRecord::Base.connected_to(role: :writing) do
+          AuthTrail.track(
+            strategy: detect_strategy(auth),
+            scope: opts[:scope].to_s,
+            identity: AuthTrail.identity_method.call(request, opts, user),
+            success: true,
+            request: request,
+            user: user
+          )
+        end
       end
 
       def before_failure(env, opts)
         request = ActionDispatch::Request.new(env)
 
-        AuthTrail.track(
-          strategy: detect_strategy(env["warden"]),
-          scope: opts[:scope].to_s,
-          identity: AuthTrail.identity_method.call(request, opts, nil),
-          success: false,
-          request: request,
-          failure_reason: opts[:message].to_s
-        )
+        ActiveRecord::Base.connected_to(role: :writing) do
+          AuthTrail.track(
+            strategy: detect_strategy(env["warden"]),
+            scope: opts[:scope].to_s,
+            identity: AuthTrail.identity_method.call(request, opts, nil),
+            success: false,
+            request: request,
+            failure_reason: opts[:message].to_s
+          )
+        end
       end
 
       private
