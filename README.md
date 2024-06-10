@@ -218,29 +218,6 @@ We recommend using this in addition to Devise’s `Lockable` module and [Rack::A
 
 Check out [Hardening Devise](https://ankane.org/hardening-devise) and [Secure Rails](https://github.com/ankane/secure_rails) for more best practices.
 
-## Upgrading
-
-### 0.4.0
-
-There are two notable changes to geocoding:
-
-1. Geocoding is now disabled by default (this was already the case for new installations with 0.3.0+). Check out the instructions for [how to enable it](#geocoding) (you may need to create `config/initializers/authtrail.rb`).
-
-2. The `geocoder` gem is now an optional dependency. To use geocoding, add it to your Gemfile:
-
-  ```ruby
-  gem "geocoder"
-  ```
-
-### 0.2.0
-
-To store latitude and longitude, create a migration with:
-
-```ruby
-add_column :login_activities, :latitude, :float
-add_column :login_activities, :longitude, :float
-```
-
 ## History
 
 View the [changelog](https://github.com/ankane/authtrail/blob/master/CHANGELOG.md)
