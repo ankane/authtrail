@@ -7,7 +7,7 @@ Devise.setup do |config|
   require "devise/orm/active_record"
 
   config.warden do |manager|
-    manager.failure_app = ->(env) { [401, {"Content-Type" => "text/html"}, "Unauthorized"] }
+    manager.failure_app = ->(env) { [401, {"Content-Type" => "text/html"}, ["Unauthorized"]] }
   end
 end
 
