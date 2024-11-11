@@ -12,6 +12,14 @@ module AuthTrail
     attr_accessor :exclude_method, :geocode, :track_method, :identity_method, :job_queue, :transform_method
   end
   self.geocode = false
+  self.track_method = lambda do |data|
+    login_activity = LoginActivity.new
+    data.each do |k, v|
+      login_activity.try("#{k}=", v)
+    end
+    login_activity.save!
+    AuthTrail::GeocodeJob.perform_later(login_activity) if AuthTrail.geocode
+  end
   self.identity_method = lambda do |request, opts, user|
     if user
       user.try(:email)
@@ -46,16 +54,7 @@ module AuthTrail
     exclude = AuthTrail.exclude_method && AuthTrail.safely(default: false) { AuthTrail.exclude_method.call(data) }
 
     unless exclude
-      if AuthTrail.track_method
-        AuthTrail.track_method.call(data)
-      else
-        login_activity = LoginActivity.new
-        data.each do |k, v|
-          login_activity.try("#{k}=", v)
-        end
-        login_activity.save!
-        AuthTrail::GeocodeJob.perform_later(login_activity) if AuthTrail.geocode
-      end
+      AuthTrail.track_method.call(data)
     end
   end
 
