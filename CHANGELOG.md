@@ -1,4 +1,4 @@
-## 0.6.0 (unreleased)
+## 0.6.0 (2024-11-11)
 
 - Improved generator for Active Record encryption and MySQL
 - Removed support for Rails < 7 and Ruby < 3.1
