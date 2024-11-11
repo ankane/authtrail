@@ -6,9 +6,7 @@ module Authtrail
       include ActiveRecord::Generators::Migration
       source_root File.join(__dir__, "templates")
 
-      class_option :encryption, type: :string
-      # deprecated
-      class_option :lockbox, type: :boolean
+      class_option :encryption, type: :string, required: true
 
       def copy_migration
         encryption # ensure valid
@@ -56,18 +54,10 @@ module Authtrail
         end
       end
 
-      # TODO remove default
       def encryption
         case options[:encryption]
         when "lockbox", "activerecord", "none"
           options[:encryption]
-        when nil
-          if options[:lockbox]
-            # TODO deprecation warning
-            "lockbox"
-          else
-            "none"
-          end
         else
           abort "Error: encryption must be lockbox, activerecord, or none"
         end
