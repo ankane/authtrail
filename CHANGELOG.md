@@ -1,3 +1,7 @@
+## 0.6.0 (unreleased)
+
+- Improved generator for Active Record encryption and MySQL
+
 ## 0.5.0 (2023-07-02)
 
 - Made Active Record and Active Job optional

@@ -39,8 +39,11 @@ module Authtrail
         when "lockbox"
           "t.text :identity_ciphertext\n      t.string :identity_bidx, index: true"
         else
-          # TODO add limit: 510 for Active Record encryption + MySQL?
-          "t.string :identity, index: true"
+          if encryption == "activerecord" && mysql?
+            "t.string :identity, limit: 510, index: true"
+          else
+            "t.string :identity, index: true"
+          end
         end
       end
 
@@ -49,7 +52,6 @@ module Authtrail
         when "lockbox"
           "t.text :ip_ciphertext\n      t.string :ip_bidx, index: true"
         else
-          # TODO add limit: 510 for Active Record encryption + MySQL?
           "t.string :ip, index: true"
         end
       end
@@ -77,6 +79,14 @@ module Authtrail
         else
           "has_encrypted"
         end
+      end
+
+      def mysql?
+        adapter =~ /mysql|trilogy/i
+      end
+
+      def adapter
+        ActiveRecord::Base.connection_db_config.adapter.to_s
       end
     end
   end

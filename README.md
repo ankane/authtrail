@@ -21,7 +21,7 @@ rails generate authtrail:install --encryption=lockbox
 rails db:migrate
 ```
 
-To use Active Record encryption (Rails 7+, experimental), run:
+To use Active Record encryption (Rails 7+), run:
 
 ```sh
 rails generate authtrail:install --encryption=activerecord
