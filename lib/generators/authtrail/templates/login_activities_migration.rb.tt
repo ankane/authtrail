@@ -6,7 +6,7 @@ class <%= migration_class_name %> < ActiveRecord::Migration<%= migration_version
       <%= identity_column %>
       t.boolean :success
       t.string :failure_reason
-      t.references :user, polymorphic: true
+      <%= user_reference %>
       t.string :context
       <%= ip_column %>
       t.text :user_agent

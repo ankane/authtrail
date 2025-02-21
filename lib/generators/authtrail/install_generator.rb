@@ -7,6 +7,7 @@ module Authtrail
       source_root File.join(__dir__, "templates")
 
       class_option :encryption, type: :string, required: true
+      class_option :uuid, type: :boolean, default: false, desc: 'Use UUID for user_id'
 
       def copy_migration
         encryption # ensure valid
@@ -77,6 +78,14 @@ module Authtrail
 
       def adapter
         ActiveRecord::Base.connection_db_config.adapter.to_s
+      end
+
+      def user_reference
+        if options[:uuid]
+          't.references :user, type: :uuid, polymorphic: true'
+        else
+          't.references :user, polymorphic: true'
+        end
       end
     end
   end
