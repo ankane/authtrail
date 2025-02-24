@@ -28,7 +28,7 @@ class InstallGeneratorTest < Rails::Generators::TestCase
     assert_file "app/models/login_activity.rb", /LoginActivity < ApplicationRecord/
     assert_migration "db/migrate/create_login_activities.rb", /t.string :identity, index: true/
   end
-  
+
   def test_uuid_option
     run_generator ['--encryption=none', '--uuid']
     assert_migration 'db/migrate/create_login_activities.rb', /t.references :user, type: :uuid, polymorphic: true/
@@ -37,5 +37,10 @@ class InstallGeneratorTest < Rails::Generators::TestCase
   def test_default_id_type
     run_generator ['--encryption=none']
     assert_migration 'db/migrate/create_login_activities.rb', /t.references :user, polymorphic: true/
+  end
+
+  def test_uuid_table_id
+    run_generator ['--encryption=none', '--uuid']
+    assert_migration 'db/migrate/create_login_activities.rb', /create_table :login_activities, id: :uuid do/
   end
 end

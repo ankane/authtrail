@@ -1,6 +1,6 @@
 class <%= migration_class_name %> < ActiveRecord::Migration<%= migration_version %>
   def change
-    create_table :login_activities do |t|
+    create_table :login_activities<%= id_type ? ", id: #{id_type}" : '' %> do |t|
       t.string :scope
       t.string :strategy
       <%= identity_column %>

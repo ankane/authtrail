@@ -87,6 +87,10 @@ module Authtrail
           't.references :user, polymorphic: true'
         end
       end
+
+      def id_type
+        options[:uuid] ? ':uuid' : nil
+      end
     end
   end
 end
