@@ -14,11 +14,7 @@ end
 Combustion.path = "test/internal"
 Combustion.initialize! :active_record, :action_controller, :active_job do
   config.load_defaults Rails::VERSION::STRING.to_f
-
-  if Rails::VERSION::STRING.to_f >= 7.1
-    config.action_dispatch.show_exceptions = :none
-  end
-
+  config.action_dispatch.show_exceptions = :none
   config.active_job.queue_adapter = :test
 
   logger = ActiveSupport::Logger.new(ENV["VERBOSE"] ? STDOUT : nil)

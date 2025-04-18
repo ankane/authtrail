@@ -1,3 +1,7 @@
+## 0.7.0 (unreleased)
+
+- Removed support for Rails < 7.1 and Ruby < 3.2
+
 ## 0.6.0 (2024-11-11)
 
 - Improved generator for Active Record encryption and MySQL
