@@ -35,6 +35,13 @@ rails generate authtrail:install --encryption=none
 rails db:migrate
 ```
 
+If your application uses UUID for user IDs, add the `--uuid` option:
+
+```sh
+rails generate authtrail:install --encryption=[lockbox|activerecord|none] --uuid
+rails db:migrate
+```
+
 To enable geocoding, see the [Geocoding section](#geocoding).
 
 ## How It Works
