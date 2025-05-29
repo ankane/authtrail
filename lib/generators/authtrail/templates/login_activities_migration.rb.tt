@@ -1,12 +1,12 @@
 class <%= migration_class_name %> < ActiveRecord::Migration<%= migration_version %>
   def change
-    create_table :login_activities do |t|
+    create_table :login_activities<%= primary_key_type %> do |t|
       t.string :scope
       t.string :strategy
       <%= identity_column %>
       t.boolean :success
       t.string :failure_reason
-      t.references :user, polymorphic: true
+      t.references :user<%= foreign_key_type %>, polymorphic: true
       t.string :context
       <%= ip_column %>
       t.text :user_agent

@@ -78,6 +78,18 @@ module Authtrail
       def adapter
         ActiveRecord::Base.connection_db_config.adapter.to_s
       end
+
+      def primary_key_type
+        ", id: :#{key_type}" if key_type
+      end
+
+      def foreign_key_type
+        ", type: :#{key_type}" if key_type
+      end
+
+      def key_type
+        Rails.configuration.generators.options.dig(:active_record, :primary_key_type)
+      end
     end
   end
 end
