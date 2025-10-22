@@ -1,7 +1,6 @@
 require "bundler/setup"
 Bundler.require
 require "minitest/autorun"
-require "minitest/pride"
 
 Devise.setup do |config|
   require "devise/orm/active_record"
