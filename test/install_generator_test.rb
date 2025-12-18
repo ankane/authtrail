@@ -30,10 +30,22 @@ class InstallGeneratorTest < Rails::Generators::TestCase
   end
 
   def test_primary_key_type
-    Rails.configuration.generators.stub(:options, {active_record: {primary_key_type: :uuid}}) do
+    with_generator_options({active_record: {primary_key_type: :uuid}}) do
       run_generator ["--encryption=lockbox"]
     end
     assert_migration "db/migrate/create_login_activities.rb", /id: :uuid/
     assert_migration "db/migrate/create_login_activities.rb", /type: :uuid/
+  end
+
+  private
+
+  def with_generator_options(value)
+    previous_value = Rails.configuration.generators.options
+    begin
+      Rails.configuration.generators.options = value
+      yield
+    ensure
+      Rails.configuration.generators.options = previous_value
+    end
   end
 end
