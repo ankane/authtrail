@@ -120,4 +120,22 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
       assert_equal "Bad", error.message
     end
   end
+
+  def test_custom_strategy
+    Warden::Strategies.add(:custom_strategy) do
+      def authenticate!
+        success!(User.create!(email: "test@example.org", password: "secret"))
+      end
+    end
+
+    Devise.warden_config[:default_strategies][:user].prepend(:custom_strategy)
+
+    post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
+
+    Devise.warden_config[:default_strategies][:user].delete(:custom_strategy)
+
+    assert_equal 1, LoginActivity.count
+    login_activity = LoginActivity.last
+    assert_equal "custom_strategy", login_activity.strategy
+  end
 end
