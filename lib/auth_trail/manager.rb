@@ -32,7 +32,7 @@ module AuthTrail
       def detect_strategy(auth)
         strategy = auth.env["omniauth.auth"]["provider"] if auth.env["omniauth.auth"]
         strategy ||= Warden::Strategies._strategies.key(auth&.winning_strategy&.class)
-        strategy ||= auth.winning_strategy.class.name.split("::").last.underscore if auth.winning_strategy
+        strategy ||= auth.winning_strategy.class.name&.split("::")&.last&.underscore if auth.winning_strategy
         strategy ||= "database_authenticatable"
         strategy
       end
