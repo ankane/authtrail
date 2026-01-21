@@ -129,13 +129,12 @@ class AuthTrailTest < ActionDispatch::IntegrationTest
     end
 
     Devise.warden_config[:default_strategies][:user].prepend(:custom_strategy)
-
     post user_session_url, params: {user: {email: "test@example.org", password: "secret"}}
-
-    Devise.warden_config[:default_strategies][:user].delete(:custom_strategy)
 
     assert_equal 1, LoginActivity.count
     login_activity = LoginActivity.last
     assert_equal "custom_strategy", login_activity.strategy
+  ensure
+    Devise.warden_config[:default_strategies][:user].delete(:custom_strategy)
   end
 end
