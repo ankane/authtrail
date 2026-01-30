@@ -1,3 +1,7 @@
+## 0.7.1 (unreleased)
+
+- Fixed error with certain custom Warden strategies
+
 ## 0.7.0 (2025-05-04)
 
 - Removed support for Rails < 7.1 and Ruby < 3.2
