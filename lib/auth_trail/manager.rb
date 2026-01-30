@@ -38,7 +38,7 @@ module AuthTrail
               winning_class.name.split("::").last.underscore
             else
               # rescue since _strategies is private
-              Warden::Strategies._strategies.key(winning_class).to_s rescue "unknown"
+              (Warden::Strategies._strategies.key(winning_class)&.to_s rescue nil) || "unknown"
             end
         end
         strategy ||= "database_authenticatable"
