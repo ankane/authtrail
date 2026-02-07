@@ -1,4 +1,4 @@
-## 0.7.1 (unreleased)
+## 0.7.1 (2026-02-07)
 
 - Fixed error with certain custom Warden strategies
 
