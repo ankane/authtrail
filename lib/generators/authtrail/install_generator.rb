@@ -20,7 +20,7 @@ module Authtrail
       def generate_model
         case encryption
         when "lockbox"
-          template "model_lockbox.rb", "app/models/login_activity.rb", lockbox_method: lockbox_method
+          template "model_lockbox.rb", "app/models/login_activity.rb"
         when "activerecord"
           template "model_activerecord.rb", "app/models/login_activity.rb"
         else
@@ -60,14 +60,6 @@ module Authtrail
           options[:encryption]
         else
           abort "Error: encryption must be lockbox, activerecord, or none"
-        end
-      end
-
-      def lockbox_method
-        if defined?(Lockbox::VERSION) && Lockbox::VERSION.to_i < 1
-          "encrypts"
-        else
-          "has_encrypted"
         end
       end
 
